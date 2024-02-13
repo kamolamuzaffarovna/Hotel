@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url({% static 'img/bg-img/17.jpg' %});">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcrumb-content text-center">
+                    <h2 class="page-title">Blog Left Sidebar</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center">
+                            <li class="breadcrumb-item"><a href="../index-2.html">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Blog Left Sidebar</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="roberto-news-area section-padding-100-0">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+
+                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+
+                    <div class="post-thumbnail">
+                        <a href="#"><img src="{% static 'img/bg-img/24.jpg' %}" alt></a>
+                    </div>
+
+                    <div class="post-content">
+
+                        <div class="post-meta">
+                            <a href="#" class="post-author">Jan 02, 2019</a>
+                            <a href="#" class="post-tutorial">Event</a>
+                        </div>
+
+                        <a href="#" class="post-title">Cdc Issues Health Alert Notice For Travelers To Usa From Hon</a>
+                        <p>A round-the-world trip remains the world’s greatest journey. For two out of every three
+                            people, this is the ultimate travel experience, according to recent research...</p>
+                        <a href="#" class="btn continue-btn">Read More</a>
+                    </div>
+                </div>
+
+                <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next <i class="fa fa-angle-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                <div class="roberto-sidebar-area pl-md-4">
+
+                    <div class="single-widget-area mb-100">
+                        <div class="newsletter-form">
+                            <h5>Newsletter</h5>
+                            <p>Subscribe our newsletter gor get notification new updates.</p>
+                            <form action="#" method="post">
+                                <input type="email" name="nl-email" id="nlEmail" class="form-control"
+                                       placeholder="Enter your email...">
+                                <button type="submit" class="btn roberto-btn w-100">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="single-widget-area mb-100 clearfix">
+                        <h4 class="widget-title mb-30">Tags</h4>
+
+                        <ul class="popular-tags">
+                            <li><a href="#">Bed,</a></li>
+                            <li><a href="#">Hotel,</a></li>
+                            <li><a href="#">Travel,</a></li>
+                            <li><a href="#">Restaurant,</a></li>
+                            <li><a href="#">Sport,</a></li>
+                            <li><a href="#">Trip,</a></li>
+                            <li><a href="#">Music,</a></li>
+                            <li><a href="#">Holiday,</a></li>
+                            <li><a href="#">Tourist,</a></li>
+                            <li><a href="#">Foody,</a></li>
+                            <li><a href="#">Resorts.</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
