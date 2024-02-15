@@ -8,14 +8,7 @@ class RoomListView(TemplateView):
 
 
 class RoomDetailView(TemplateView):
-    # slug_field = 'slug'
     template_name = 'room/room_detail.html'
-
-    # def get_queryset(self):
-    #     room = Room.objects.all()
-    #     image = FooterImage.objects.all()
-    #     information = Information.objects.all()
-    #     return list(room) + list(image) + list(information)
 
     def get_rooms(self):
         return Room.objects.all()

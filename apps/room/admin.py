@@ -3,7 +3,7 @@ from .models import (
     Room,
     Information,
     Service,
-    Date,
+    Booking,
     Guest,
     Price,
     FooterImage
@@ -39,8 +39,8 @@ class ServiceAdmin(admin.ModelAdmin):
     readonly_fields = ('created_date', )
 
 
-@admin.register(Date)
-class DateAdmin(admin.ModelAdmin):
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
     list_display = ('id', 'check_in', 'check_out', 'created_date')
     readonly_fields = ('created_date', )
     autocomplete_fields = ('room', )

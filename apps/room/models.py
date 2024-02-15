@@ -42,13 +42,20 @@ class Service(BaseModel):
         return self.title
 
 
-class Date(BaseModel):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='dates')
+class Booking(BaseModel):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='booking')
+    author = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True)
     check_in = models.DateField()
     check_out = models.DateField()
+    adults = models.IntegerField()
+    children = models.IntegerField()
 
     def __str__(self):
         return self.check_in
+
+    @property
+    def amount(self):
+        pass
 
 
 class Guest(BaseModel):
