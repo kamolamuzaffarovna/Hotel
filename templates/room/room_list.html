@@ -28,17 +28,20 @@
                 <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
 
                     <div class="room-thumbnail">
-                        <img src="{% static 'img/bg-img/43.jpg' %}" alt>
+                        {% for object in list %}
+                            <img src="{{ object.header_image.url }}" alt>
+                        {% endfor %}
                     </div>
 
                     <div class="room-content">
-                        <h2>Room View Sea</h2>
-                        <h4>400$ <span>/ Day</span></h4>
+                        {% for object in list %}
+                            <h2>{{ object.title }}</h2>
+                            <h4>{{ object.money }} <span>/ Day</span></h4>
+                        {% endfor %}
                         <div class="room-feature">
-                            <h6>Size: <span>30 ft</span></h6>
-                            <h6>Capacity: <span>Max persion 5</span></h6>
-                            <h6>Bed: <span>King beds</span></h6>
-                            <h6>Services: <span>Wifi, television ...</span></h6>
+                            {% for object in data %}
+                                <h6>{{ object.title }}<span>{{ object.footer_title }}</span></h6>
+                            {% endfor %}
                         </div>
                         <a href="{% url 'room:page-detail' %}" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right"
                                                                                 aria-hidden="true"></i></a>

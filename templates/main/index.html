@@ -277,26 +277,6 @@
                     </div>
                 </div>
             {% endfor %}
-            {#            <div class="single-project-slide bg-img" style="background-image: url({% static 'img/bg-img/6.jpg' %});">#}
-            {##}
-            {#                <div class="project-content">#}
-            {#                    <div class="text">#}
-            {#                        <h6>Entertaiment</h6>#}
-            {#                        <h5>Racing Bike</h5>#}
-            {#                    </div>#}
-            {#                </div>#}
-            {##}
-            {#                <div class="hover-effects">#}
-            {#                    <div class="text">#}
-            {#                        <h6>Entertaiment</h6>#}
-            {#                        <h5>Racing Bike</h5>#}
-            {#                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and#}
-            {#                            confident...</p>#}
-            {#                    </div>#}
-            {#                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right"#}
-            {#                                                                        aria-hidden="true"></i></a>#}
-            {#                </div>#}
-            {#            </div>#}
 
         </div>
     </section>
@@ -324,9 +304,9 @@
                                 <a href="#" class="post-catagory">Event</a>
                             </div>
 
-                            <a href="#" class="post-title">{{ object.title }}</a>
+                            <a href="{% url 'blog:detail' %}" class="post-title">{{ object.title }}</a>
                             <p>{{ object.content|safe|slice:100 }}...</p>
-                            <a href="../index-2.html" class="btn continue-btn"><i class="fa fa-long-arrow-right"
+                            <a href="{% url 'blog:detail' %}" class="btn continue-btn"><i class="fa fa-long-arrow-right"
                                                                                   aria-hidden="true"></i></a>
                         </div>
                     </div>
