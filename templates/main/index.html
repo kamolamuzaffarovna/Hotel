@@ -138,12 +138,14 @@
                         <h2>Welcome to <br>Roberto Hotel Luxury</h2>
                     </div>
 
-                        <div class="about-us-content mb-100">
-                            <h5 class="wow fadeInUp" data-wow-delay="300ms">{% for object in mixed_list %}{{ object.bio }}{% endfor %}</h5>
-                            <p class="wow fadeInUp" data-wow-delay="400ms">Manager: <span>{% for object in mixed_list %}{{ object.name }}{% endfor %}</span></p>
-                            <img src="{% static 'img/core-img/signature.png' %}" alt class="wow fadeInUp"
-                                 data-wow-delay="500ms">
-                        </div>
+                    <div class="about-us-content mb-100">
+                        <h5 class="wow fadeInUp" data-wow-delay="300ms">
+                            {% for object in mixed_list %}{{ object.bio }}{% endfor %}</h5>
+                        <p class="wow fadeInUp" data-wow-delay="400ms">Manager: <span>{% for object in mixed_list %}
+                            {{ object.name }}{% endfor %}</span></p>
+                        <img src="{% static 'img/core-img/signature.png' %}" alt class="wow fadeInUp"
+                             data-wow-delay="500ms">
+                    </div>
 
                 </div>
                 <div class="col-12 col-lg-6">
@@ -249,49 +251,52 @@
     <section class="roberto-project-area">
 
         <div class="projects-slides owl-carousel">
+            {% for slide in mixed_list %}
+                <div class="single-project-slide active bg-img"
+                     style="background-image: url({% if slide.image %}{{ slide.image.url }}{% endif %});">
 
-            <div class="single-project-slide active bg-img"
-                 style="background-image: url({% static 'img/bg-img/5.jpg' %});">
+                    <div class="project-content">
+                        <div class="text">
+                            {% if slide.header_title %}
+                                <h6>{{ slide.header_title }}</h6>
+                            {% endif %}
+                            {% if slide.footer_title %}
+                                <h5>{{ slide.footer_title }}</h5>
+                            {% endif %}
+                        </div>
+                    </div>
 
-                <div class="project-content">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
+                    <div class="hover-effects">
+                        <div class="text">
+                            <h6>{{ slide.header_title }}</h6>
+                            <h5>{{ slide.footer_title }}</h5>
+                            <p>{{ slide.content }}</p>
+                        </div>
+                        <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right"
+                                                                            aria-hidden="true"></i></a>
                     </div>
                 </div>
-
-                <div class="hover-effects">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and
-                            confident...</p>
-                    </div>
-                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right"
-                                                                        aria-hidden="true"></i></a>
-                </div>
-            </div>
-
-            <div class="single-project-slide bg-img" style="background-image: url({% static 'img/bg-img/6.jpg' %});">
-
-                <div class="project-content">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                    </div>
-                </div>
-
-                <div class="hover-effects">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and
-                            confident...</p>
-                    </div>
-                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right"
-                                                                        aria-hidden="true"></i></a>
-                </div>
-            </div>
+            {% endfor %}
+            {#            <div class="single-project-slide bg-img" style="background-image: url({% static 'img/bg-img/6.jpg' %});">#}
+            {##}
+            {#                <div class="project-content">#}
+            {#                    <div class="text">#}
+            {#                        <h6>Entertaiment</h6>#}
+            {#                        <h5>Racing Bike</h5>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {##}
+            {#                <div class="hover-effects">#}
+            {#                    <div class="text">#}
+            {#                        <h6>Entertaiment</h6>#}
+            {#                        <h5>Racing Bike</h5>#}
+            {#                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and#}
+            {#                            confident...</p>#}
+            {#                    </div>#}
+            {#                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right"#}
+            {#                                                                        aria-hidden="true"></i></a>#}
+            {#                </div>#}
+            {#            </div>#}
 
         </div>
     </section>
@@ -309,24 +314,23 @@
                 </div>
             </div>
             <div class="row">
+                {% for blog in mixed_list %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
+                            <a href="#" class="post-thumbnail"><img src="{{ blog.image.url }}" alt></a>
 
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                        <a href="#" class="post-thumbnail"><img src="{% static 'img/bg-img/2.jpg' %}" alt></a>
+                            <div class="post-meta">
+                                <a href="#" class="post-date">{{ blog.created_date|date:'d F, Y' }}</a>
+                                <a href="#" class="post-catagory">Event</a>
+                            </div>
 
-                        <div class="post-meta">
-                            <a href="#" class="post-date">Jan 02, 2019</a>
-                            <a href="#" class="post-catagory">Event</a>
+                            <a href="#" class="post-title">{{ blog.title }}</a>
+                            <p>{{ blog.content|safe|slice:100 }}...</p>
+                            <a href="../index-2.html" class="btn continue-btn"><i class="fa fa-long-arrow-right"
+                                                                                  aria-hidden="true"></i></a>
                         </div>
-
-                        <a href="#" class="post-title">Learn How To Motivate Yourself</a>
-                        <p>How many free autoresponders have you tried? And how many emails did you get through using
-                            them?</p>
-                        <a href="../index-2.html" class="btn continue-btn"><i class="fa fa-long-arrow-right"
-                                                                              aria-hidden="true"></i></a>
                     </div>
-                </div>
-
+                {% endfor %}
             </div>
         </div>
     </section>

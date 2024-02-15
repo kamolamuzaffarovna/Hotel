@@ -19,7 +19,7 @@ class FooterImageInline(admin.StackedInline):
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'money', 'created_date')
-    readonly_fields = ('slug', 'modified_date', 'created_date')
+    readonly_fields = ('modified_date', 'created_date')
     date_hierarchy = 'created_date'
     search_fields = ('title', )
     inlines = [FooterImageInline]

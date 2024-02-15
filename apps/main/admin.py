@@ -4,7 +4,8 @@ from .models import (
     Icon,
     Contact,
     HotelContact,
-    Manager
+    Manager,
+    Slide
 )
 
 
@@ -35,3 +36,9 @@ class HotelContactAdmin(admin.ModelAdmin):
 class ManagerAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     search_fields = ('name', )
+
+
+@admin.register(Slide)
+class SlideAdmin(admin.ModelAdmin):
+    list_display = ('id', 'header_title')
+    search_fields = ('header_title', 'footer_title')

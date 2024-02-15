@@ -15,7 +15,7 @@ class DateField(models.Model):
 
 class Icon(models.Model):
     title = models.CharField(max_length=221)
-    image = models.ImageField(upload_to='icon/')
+    image = models.ImageField(upload_to='icon/', null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -47,3 +47,13 @@ class Manager(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Slide(models.Model):
+    header_title = models.CharField(max_length=221)
+    footer_title = models.CharField(max_length=221)
+    image = models.ImageField(upload_to='slide/', null=True, blank=True)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.header_title
