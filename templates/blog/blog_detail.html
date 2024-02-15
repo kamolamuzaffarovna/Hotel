@@ -9,10 +9,11 @@
                 <div class="col-12">
                     <div class="breadcrumb-content text-center">
                         <div class="breadcrumb-post-content">
-                            <h2 class="post-title">{% for object in mixed_lists %}{{ object.title }}{% endfor %}</h2>
+                            <h2 class="post-title">{% for object in blog %}{{ object.title }}{% endfor %}</h2>
                             <div class="post-meta">
-                                <a href="#" class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i> Jan 02,
-                                    2019</a>
+                                <a href="#" class="post-date"><i class="fa fa-calendar"
+                                                                 aria-hidden="true"></i>{% for object in blog %}
+                                    {{ object.created_date|date:'d F, Y' }}{% endfor %}</a>
                                 <a href="#" class="post-author"><i class="fa fa-user" aria-hidden="true"></i> by Joe
                                     Fylan</a>
                             </div>
@@ -27,7 +28,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
-                    {% for object in mixed_lists %}
+                    {% for object in blog %}
                         <div class="post-thumbnail mb-50">
                             <img src="{{ object.image.url }}" alt>
                         </div>
@@ -36,6 +37,7 @@
                             <p>{{ object.content|safe }}</p>
 
                             <blockquote class="roberto-blockquote d-flex">
+                                {% for object in content %}
                                     {% if object.is_quota %}
                                         <div class="icon">
                                             <img src="{% static 'img/core-img/quote.png' %}" alt>
@@ -44,14 +46,15 @@
                                             <h5>{{ object.content|safe }}</h5>
                                         </div>
                                     {% endif %}
+                                {% endfor %}
                             </blockquote>
 
                         </div>
                     {% endfor %}
                     <div class="post-author-area d-flex align-items-center justify-content-between mb-50">
                         <ul class="popular-tags">
-                            {% for tag in mixed_lists %}
-                                <li><a href="#">{{ tag.title }},</a></li>
+                            {% for tag in tags %}
+                                    <li><a href="#">{{ tag.title }},</a></li>
                             {% endfor %}
                         </ul>
 
@@ -175,17 +178,9 @@
                             <h4 class="widget-title mb-30">Tags</h4>
 
                             <ul class="popular-tags">
-                                <li><a href="#">Bed,</a></li>
-                                <li><a href="#">Hotel,</a></li>
-                                <li><a href="#">Travel,</a></li>
-                                <li><a href="#">Restaurant,</a></li>
-                                <li><a href="#">Sport,</a></li>
-                                <li><a href="#">Trip,</a></li>
-                                <li><a href="#">Music,</a></li>
-                                <li><a href="#">Holiday,</a></li>
-                                <li><a href="#">Tourist,</a></li>
-                                <li><a href="#">Foody,</a></li>
-                                <li><a href="#">Resorts.</a></li>
+                                {% for tag in tags %}
+                                    <li><a href="#">{{ tag.title }},</a></li>
+                                {% endfor %}
                             </ul>
                         </div>
 

@@ -3,16 +3,29 @@ from django.views.generic import TemplateView, ListView
 from .models import Blog, Tag, Content
 
 
-class BlogListView(TemplateView):
+class BlogListView(ListView):
+    queryset = Blog.objects.all()
     template_name = 'blog/blog_list.html'
 
+    # def get_queryset(self):
+    #     tags = Tag.objects.all()
+    #
+    #     return list(tags)
 
-class DetailView(ListView):
+class DetailView(TemplateView):
     template_name = 'blog/blog_detail.html'
-    context_object_name = 'mixed_lists'
 
-    def get_queryset(self):
-        blog = Blog.objects.all()
-        tag = Tag.objects.all()
-        content = Content.objects.all()
-        return list(blog) + list(tag) + list(content)
+    def get_blog(self):
+        return Blog.objects.all()
+
+    def get_content(self):
+        return Content.objects.all()
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['blog'] = self.get_blog()
+        ctx['content'] = self.get_content()
+        ctx['tags'] = Tag.objects.all()
+
+        return ctx
+
