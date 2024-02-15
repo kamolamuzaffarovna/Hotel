@@ -10,7 +10,7 @@ class RoomListView(TemplateView):
 class RoomDetailView(DetailView):
     queryset = Room.objects.all()
     slug_field = 'slug'
-    template_name = 'room/room_detail.html'
+    # template_name = 'room/room_detail.html'
 
     def get_footer_image(self):
         return FooterImage.objects.all()

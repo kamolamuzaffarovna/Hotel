@@ -23,10 +23,16 @@ class Blog(BaseModel):
     title = models.CharField(max_length=221)
     image = models.ImageField(upload_to='blog/')
     content = RichTextField()
-    is_quota = models.BooleanField(default=False)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.title
+
+
+class Content(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, blank=True, related_name='contents')
+    content = RichTextField(null=True, blank=True)
+    is_quota = models.BooleanField(default=False)
 
 
 class Comment(BaseModel):

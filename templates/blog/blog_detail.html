@@ -2,210 +2,196 @@
 {% load static %}
 
 {% block content %}
-<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url({% static 'img/bg-img/17.jpg' %});">
-    <div class="container h-100">
-        <div class="row h-100 align-items-center">
-            <div class="col-12">
-                <div class="breadcrumb-content text-center">
-                    <div class="breadcrumb-post-content">
-                        <h2 class="post-title">15 Best Interior Design WordPress Themes</h2>
-                        <div class="post-meta">
-                            <a href="#" class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i> Jan 02, 2019</a>
-                            <a href="#" class="post-author"><i class="fa fa-user" aria-hidden="true"></i> by Joe
-                                Fylan</a>
+    <div class="breadcrumb-area bg-img bg-overlay jarallax"
+         style="background-image: url({% static 'img/bg-img/17.jpg' %});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content text-center">
+                        <div class="breadcrumb-post-content">
+                            <h2 class="post-title">{% for object in mixed_lists %}{{ object.title }}{% endfor %}</h2>
+                            <div class="post-meta">
+                                <a href="#" class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i> Jan 02,
+                                    2019</a>
+                                <a href="#" class="post-author"><i class="fa fa-user" aria-hidden="true"></i> by Joe
+                                    Fylan</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="roberto-news-area section-padding-100-0">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
-
-                <div class="post-thumbnail mb-50">
-                    <img src="{% static 'img/bg-img/39.jpg' %}" alt>
-                </div>
-
-                <div class="blog-details-text">
-                    <p>“IT” (otherwise known as HD 36405.b) isn’t your average “oddball” exo-solar planet made of rock
-                        that wobbles on its end &amp; zips around a nearby star in less than 2.46 days.</p>
-                    <p>Seeking a spot of serenity somewhere in the universe, I recently booked a deep-discount dodgy
-                        berth on the ‘White Elephant Express Space Shuttle’, to a little known place in a galaxy far,
-                        far away.</p>
-                    <p>If truth be told, (after reading random excerpts from “The Itty Bitty Bunkum Book About Life, the
-                        Universe &amp; Practically Everything Under the Sun Not To Mention Stuff Going On In Remote
-                        Galaxies), I was basically delirious. According to its noted author, Dr. Jarn Leffer, “IT is a
-                        ‘must-see’ for those with little time on their hands &amp; a passionate interest in Innocuous
-                        Things.”</p>
-                    <p>Most linear thinkers have a great deal of difficulty even comprehending why on earth someone in
-                        their “right mind” would be interested in visiting a planet called “IT”. Not being a linear
-                        thinker with an investment in the “right” answer, I didn’t give a hoot. After all, what does one
-                        (who walks on water &amp; listens to miffed mortals all day long) do for a frigging night off,
-                        now I ask you?</p>
-
-                    <blockquote class="roberto-blockquote d-flex">
-                        <div class="icon">
-                            <img src="{% static 'img/core-img/quote.png' %}" alt>
+    <div class="roberto-news-area section-padding-100-0">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    {% for object in mixed_lists %}
+                        <div class="post-thumbnail mb-50">
+                            <img src="{{ object.image.url }}" alt>
                         </div>
-                        <div class="text">
-                            <h5>“Before you took that first cruise, your thoughts about cruise ships and cruise
-                                vacations consisted of flashbacks to Love Boat re-runs. Cruising was all about sunny,
-                                tropical destinations like Bermuda”</h5>
+
+                        <div class="blog-details-text">
+                            <p>{{ object.content|safe }}</p>
+
+                            <blockquote class="roberto-blockquote d-flex">
+                                    {% if object.is_quota %}
+                                        <div class="icon">
+                                            <img src="{% static 'img/core-img/quote.png' %}" alt>
+                                        </div>
+                                        <div class="text">
+                                            <h5>{{ object.content|safe }}</h5>
+                                        </div>
+                                    {% endif %}
+                            </blockquote>
+
                         </div>
-                    </blockquote>
-                    <p>The city of southern California, san diego is locally known as ‘America’s Finest City’. It’s
-                        located on San Diego Bay, an inlet of the Pacific Ocean near the Mexican border. San Diego is
-                        the second largest city in California and the seventh largest in the United States. It is also
-                        nicknamed as ‘America’s biggest small town’.</p>
-                </div>
+                    {% endfor %}
+                    <div class="post-author-area d-flex align-items-center justify-content-between mb-50">
+                        <ul class="popular-tags">
+                            {% for tag in mixed_lists %}
+                                <li><a href="#">{{ tag.title }},</a></li>
+                            {% endfor %}
+                        </ul>
 
-                <div class="post-author-area d-flex align-items-center justify-content-between mb-50">
-                    <ul class="popular-tags">
-                        <li><a href="#">Bed,</a></li>
-                        <li><a href="#">Travel,</a></li>
-                        <li><a href="#">Hotel</a></li>
-                    </ul>
-
-                    <div class="author-social-info d-flex align-items-center">
-                        <p>Share:</p>
-                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                        <div class="author-social-info d-flex align-items-center">
+                            <p>Share:</p>
+                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                        </div>
                     </div>
-                </div>
 
-                <div class="comment_area mb-50 clearfix">
-                    <h2>02 Comments</h2>
-                    <ol>
+                    <div class="comment_area mb-50 clearfix">
+                        <h2>02 Comments</h2>
+                        <ol>
 
-                        <li class="single_comment_area">
+                            <li class="single_comment_area">
 
-                            <div class="comment-content d-flex">
+                                <div class="comment-content d-flex">
 
-                                <div class="comment-author">
-                                    <img src="{% static 'img/bg-img/40.jpg' %}" alt="author">
-                                </div>
-
-                                <div class="comment-meta">
-                                    <a href="#" class="post-date">27 Aug 2016</a>
-                                    <h5>Brandon Kelley</h5>
-                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                        adipisci velit, sed quia non numquam eius modi.</p>
-                                    <a href="#" class="like">Like</a>
-                                    <a href="#" class="reply">Reply</a>
-                                </div>
-                            </div>
-                            <ol class="children">
-                                <li class="single_comment_area">
-
-                                    <div class="comment-content d-flex">
-
-                                        <div class="comment-author">
-                                            <img src="{% static 'img/bg-img/41.jpg' %}" alt="author">
-                                        </div>
-
-                                        <div class="comment-meta">
-                                            <a href="#" class="post-date">27 Aug 2018</a>
-                                            <h5>John Doe</h5>
-                                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-                                                consectetu adipisci velit, sed quia non numquam eius modi</p>
-                                            <a href="#" class="like">Like</a>
-                                            <a href="#" class="reply">Reply</a>
-                                        </div>
+                                    <div class="comment-author">
+                                        <img src="{% static 'img/bg-img/40.jpg' %}" alt="author">
                                     </div>
-                                </li>
-                            </ol>
-                        </li>
 
-                        <li class="single_comment_area">
-
-                            <div class="comment-content d-flex">
-
-                                <div class="comment-author">
-                                    <img src="{% static 'img/bg-img/42.jpg' %}" alt="author">
+                                    <div class="comment-meta">
+                                        <a href="#" class="post-date">27 Aug 2016</a>
+                                        <h5>Brandon Kelley</h5>
+                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                                            adipisci velit, sed quia non numquam eius modi.</p>
+                                        <a href="#" class="like">Like</a>
+                                        <a href="#" class="reply">Reply</a>
+                                    </div>
                                 </div>
+                                <ol class="children">
+                                    <li class="single_comment_area">
 
-                                <div class="comment-meta">
-                                    <a href="#" class="post-date">27 Aug 2018</a>
-                                    <h5>Lander Tea</h5>
-                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetu
-                                        adipisci velit, sed quia non numquam eius modi</p>
-                                    <a href="#" class="like">Like</a>
-                                    <a href="#" class="reply">Reply</a>
+                                        <div class="comment-content d-flex">
+
+                                            <div class="comment-author">
+                                                <img src="{% static 'img/bg-img/41.jpg' %}" alt="author">
+                                            </div>
+
+                                            <div class="comment-meta">
+                                                <a href="#" class="post-date">27 Aug 2018</a>
+                                                <h5>John Doe</h5>
+                                                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
+                                                    consectetu adipisci velit, sed quia non numquam eius modi</p>
+                                                <a href="#" class="like">Like</a>
+                                                <a href="#" class="reply">Reply</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </li>
+
+                            <li class="single_comment_area">
+
+                                <div class="comment-content d-flex">
+
+                                    <div class="comment-author">
+                                        <img src="{% static 'img/bg-img/42.jpg' %}" alt="author">
+                                    </div>
+
+                                    <div class="comment-meta">
+                                        <a href="#" class="post-date">27 Aug 2018</a>
+                                        <h5>Lander Tea</h5>
+                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetu
+                                            adipisci velit, sed quia non numquam eius modi</p>
+                                        <a href="#" class="like">Like</a>
+                                        <a href="#" class="reply">Reply</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ol>
-                </div>
+                            </li>
+                        </ol>
+                    </div>
 
-                <div class="roberto-contact-form mt-80 mb-100">
-                    <h2>Leave A Comment</h2>
+                    <div class="roberto-contact-form mt-80 mb-100">
+                        <h2>Leave A Comment</h2>
 
-                    <form action="#" method="post">
-                        <div class="row">
-                            <div class="col-12">
-                                <input type="text" name="message-name" class="form-control mb-30"
-                                       placeholder="Your Name">
-                            </div>
-                            <div class="col-12">
-                                <input type="email" name="message-email" class="form-control mb-30" placeholder="Email">
-                            </div>
-                            <div class="col-12">
-                                <input type="text" name="website" class="form-control mb-30" placeholder="Websites">
-                            </div>
-                            <div class="col-12">
+                        <form action="#" method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="text" name="message-name" class="form-control mb-30"
+                                           placeholder="Your Name">
+                                </div>
+                                <div class="col-12">
+                                    <input type="email" name="message-email" class="form-control mb-30"
+                                           placeholder="Email">
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" name="website" class="form-control mb-30" placeholder="Websites">
+                                </div>
+                                <div class="col-12">
                                 <textarea name="message" class="form-control mb-30"
                                           placeholder="Start the discussion..."></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn roberto-btn btn-3 mt-15">Post Comment</button>
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn roberto-btn btn-3 mt-15">Post Comment</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-                <div class="roberto-sidebar-area pl-md-4">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <div class="roberto-sidebar-area pl-md-4">
 
-                    <div class="single-widget-area mb-100">
-                        <div class="newsletter-form">
-                            <h5>Newsletter</h5>
-                            <p>Subscribe our newsletter gor get notification new updates.</p>
-                            <form action="#" method="post">
-                                <input type="email" name="nl-email" id="nlEmail" class="form-control"
-                                       placeholder="Enter your email...">
-                                <button type="submit" class="btn roberto-btn w-100">Subscribe</button>
-                            </form>
+                        <div class="single-widget-area mb-100">
+                            <div class="newsletter-form">
+                                <h5>Newsletter</h5>
+                                <p>Subscribe our newsletter gor get notification new updates.</p>
+                                <form action="#" method="post">
+                                    <input type="email" name="nl-email" id="nlEmail" class="form-control"
+                                           placeholder="Enter your email...">
+                                    <button type="submit" class="btn roberto-btn w-100">Subscribe</button>
+                                </form>
+                            </div>
                         </div>
+
+                        <div class="single-widget-area mb-100 clearfix">
+                            <h4 class="widget-title mb-30">Tags</h4>
+
+                            <ul class="popular-tags">
+                                <li><a href="#">Bed,</a></li>
+                                <li><a href="#">Hotel,</a></li>
+                                <li><a href="#">Travel,</a></li>
+                                <li><a href="#">Restaurant,</a></li>
+                                <li><a href="#">Sport,</a></li>
+                                <li><a href="#">Trip,</a></li>
+                                <li><a href="#">Music,</a></li>
+                                <li><a href="#">Holiday,</a></li>
+                                <li><a href="#">Tourist,</a></li>
+                                <li><a href="#">Foody,</a></li>
+                                <li><a href="#">Resorts.</a></li>
+                            </ul>
+                        </div>
+
                     </div>
-
-                    <div class="single-widget-area mb-100 clearfix">
-                        <h4 class="widget-title mb-30">Tags</h4>
-
-                        <ul class="popular-tags">
-                            <li><a href="#">Bed,</a></li>
-                            <li><a href="#">Hotel,</a></li>
-                            <li><a href="#">Travel,</a></li>
-                            <li><a href="#">Restaurant,</a></li>
-                            <li><a href="#">Sport,</a></li>
-                            <li><a href="#">Trip,</a></li>
-                            <li><a href="#">Music,</a></li>
-                            <li><a href="#">Holiday,</a></li>
-                            <li><a href="#">Tourist,</a></li>
-                            <li><a href="#">Foody,</a></li>
-                            <li><a href="#">Resorts.</a></li>
-                        </ul>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

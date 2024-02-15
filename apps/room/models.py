@@ -5,13 +5,13 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from utils.make_slugify import make_slugify
+from utils.make_slug import make_slugify
 
 
 class Room(BaseModel):
     title = models.CharField(max_length=221)
     money = models.CharField(max_length=221)
-    slug = models.SlugField(editable=False, null=True, blank=True)
+    slug = models.SlugField(max_length=221, null=True, blank=True)
     header_image = models.ImageField(upload_to='room/')
     content = RichTextField()
 
