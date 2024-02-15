@@ -33,10 +33,10 @@
 
                     <div class="section-heading wow fadeInUp" data-wow-delay="300ms">
                         <h6>20 Years Of Experience</h6>
-                        <h2>{% for manager in room_list %}{{ manager.name }}{% endfor %}</h2>
+                        <h2>{% for object in managers %}{{ object.name }}{% endfor %}</h2>
                     </div>
                     <div class="about-content mb-100 wow fadeInUp" data-wow-delay="500ms">
-                        <p>{% for manager in room_list %}{{ manager.bio }}{% endfor %}</p>
+                        <p>{% for object in managers %}{{ object.bio }}{% endfor %}</p>
                         <img src="{% static 'img/core-img/signature.png' %}" alt>
                     </div>
                 </div>
@@ -77,9 +77,9 @@
 
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                            <img src="{% for room in room_list %}{{ room.header_image.url }}{% endfor %}" alt>
+                            <img src="{% for object in rooms %}{{ object.header_image.url }}{% endfor %}" alt>
                             <div class="service-title d-flex align-items-center justify-content-center">
-                                <h5>{% for room in room_list %}{{ room.title }}{% endfor %}</h5>
+                                <h5>{% for object in rooms %}{{ object.title }}{% endfor %}</h5>
                             </div>
                         </div>
                     </div>

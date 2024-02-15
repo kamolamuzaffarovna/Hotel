@@ -5,16 +5,30 @@ from apps.blog.models import Blog
 from apps.room.models import Room
 
 
-class HomeView(ListView):
+class HomeView(TemplateView):
     template_name = 'main/index.html'
-    context_object_name = "mixed_list"
 
-    def get_queryset(self):
-        blog = Blog.objects.all()
-        icon = Icon.objects.all()
-        manager = Manager.objects.all()
-        slide = Slide.objects.order_by()[:3]
-        return list(icon) + list(manager) + list(slide) + list(blog)
+    def get_blog(self):
+        return Blog.objects.all()
+
+    def get_icon(self):
+        return Icon.objects.all()
+
+    def get_manager(self):
+        return Manager.objects.all()
+
+    def get_slide(self):
+        return Slide.objects.all()
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['blog'] = self.get_blog()
+        ctx['icon'] = self.get_icon()
+        ctx['manager'] = self.get_manager()
+        ctx['slide'] = self.get_slide()
+
+        return ctx
+
 
 
 class ContactView(ListView):
@@ -22,13 +36,18 @@ class ContactView(ListView):
     template_name = 'main/contact.html'
 
 
-class AboutView(ListView):
-    queryset = Manager.objects.all()
+class AboutView(TemplateView):
     template_name = 'main/about.html'
 
-    context_object_name = "room_list"
+    def get_room(self):
+        return Room.objects.all()
 
-    def get_queryset(self):
-        room = Room.objects.all()[:3]
-        manager = Manager.objects.all()
-        return list(manager) + list(room)
+    def get_manager(self):
+        return Manager.objects.all()
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['rooms'] = self.get_room()
+        ctx['managers'] = self.get_manager()
+
+        return ctx

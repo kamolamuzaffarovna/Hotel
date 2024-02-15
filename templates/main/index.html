@@ -140,8 +140,8 @@
 
                     <div class="about-us-content mb-100">
                         <h5 class="wow fadeInUp" data-wow-delay="300ms">
-                            {% for object in mixed_list %}{{ object.bio }}{% endfor %}</h5>
-                        <p class="wow fadeInUp" data-wow-delay="400ms">Manager: <span>{% for object in mixed_list %}
+                            {% for object in manager %}{{ object.bio }}{% endfor %}</h5>
+                        <p class="wow fadeInUp" data-wow-delay="400ms">Manager: <span>{% for object in manager %}
                             {{ object.name }}{% endfor %}</span></p>
                         <img src="{% static 'img/core-img/signature.png' %}" alt class="wow fadeInUp"
                              data-wow-delay="500ms">
@@ -181,7 +181,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="service-content d-flex align-items-center justify-content-between">
-                        {% for object in mixed_list %}
+                        {% for object in icon %}
                             <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="100ms">
                                 <img src="{% if object.image.url %}{{ object.image.url }}{% endif %}"
                                      alt>
@@ -251,26 +251,26 @@
     <section class="roberto-project-area">
 
         <div class="projects-slides owl-carousel">
-            {% for slide in mixed_list %}
+            {% for object in slide %}
                 <div class="single-project-slide active bg-img"
-                     style="background-image: url({% if slide.image %}{{ slide.image.url }}{% endif %});">
+                     style="background-image: url({{ object.image.url }});">
 
                     <div class="project-content">
                         <div class="text">
-                            {% if slide.header_title %}
-                                <h6>{{ slide.header_title }}</h6>
+                            {% if object.header_title %}
+                                <h6>{{ object.header_title }}</h6>
                             {% endif %}
-                            {% if slide.footer_title %}
-                                <h5>{{ slide.footer_title }}</h5>
+                            {% if object.footer_title %}
+                                <h5>{{ object.footer_title }}</h5>
                             {% endif %}
                         </div>
                     </div>
 
                     <div class="hover-effects">
                         <div class="text">
-                            <h6>{{ slide.header_title }}</h6>
-                            <h5>{{ slide.footer_title }}</h5>
-                            <p>{{ slide.content }}</p>
+                            <h6>{{ object.header_title }}</h6>
+                            <h5>{{ object.footer_title }}</h5>
+                            <p>{{ object.content }}</p>
                         </div>
                         <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right"
                                                                             aria-hidden="true"></i></a>
@@ -314,18 +314,18 @@
                 </div>
             </div>
             <div class="row">
-                {% for blog in mixed_list %}
+                {% for object in blog %}
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                            <a href="#" class="post-thumbnail"><img src="{{ blog.image.url }}" alt></a>
+                            <a href="#" class="post-thumbnail"><img src="{{ object.image.url }}" alt></a>
 
                             <div class="post-meta">
-                                <a href="#" class="post-date">{{ blog.created_date|date:'d F, Y' }}</a>
+                                <a href="#" class="post-date">{{ object.created_date|date:'d F, Y' }}</a>
                                 <a href="#" class="post-catagory">Event</a>
                             </div>
 
-                            <a href="#" class="post-title">{{ blog.title }}</a>
-                            <p>{{ blog.content|safe|slice:100 }}...</p>
+                            <a href="#" class="post-title">{{ object.title }}</a>
+                            <p>{{ object.content|safe|slice:100 }}...</p>
                             <a href="../index-2.html" class="btn continue-btn"><i class="fa fa-long-arrow-right"
                                                                                   aria-hidden="true"></i></a>
                         </div>
