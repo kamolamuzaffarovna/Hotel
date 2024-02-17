@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from .models import Icon, Manager, HotelContact, Slide
 from apps.blog.models import Blog
-from apps.room.models import Room
+from apps.room.models import Room, Information
 
 
 class HomeView(TemplateView):
@@ -20,12 +20,20 @@ class HomeView(TemplateView):
     def get_slide(self):
         return Slide.objects.all()
 
+    def get_room(self):
+        return Room.objects.all()
+
+    def get_information(self):
+        return Information.objects.all()
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['blog'] = self.get_blog()
         ctx['icon'] = self.get_icon()
         ctx['manager'] = self.get_manager()
         ctx['slide'] = self.get_slide()
+        ctx['room'] = self.get_room()
+        ctx['data'] = self.get_information()
 
         return ctx
 
