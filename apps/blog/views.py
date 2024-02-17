@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from .models import Blog, Tag, Content
 
 
@@ -12,8 +12,8 @@ class BlogListView(ListView):
     #
     #     return list(tags)
 
-class DetailView(TemplateView):
-    template_name = 'blog/blog_detail.html'
+class BlogDetailView(DetailView):
+    queryset = Blog.objects.all()
 
     def get_blog(self):
         return Blog.objects.all()

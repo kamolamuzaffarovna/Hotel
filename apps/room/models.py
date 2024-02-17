@@ -58,23 +58,6 @@ class Booking(BaseModel):
         pass
 
 
-class Guest(BaseModel):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='guests')
-    adults = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(6)])
-    children = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(6)])
-
-    def __str__(self):
-        return self.adults
-
-
-class Price(BaseModel):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='prices')
-    money = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(3000)])
-
-    def __str__(self):
-        return self.money
-
-
 @receiver(pre_save, sender=Room)
 def room_pre_save(sender, instance, *args, **kwargs):
     if not instance.slug:

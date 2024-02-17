@@ -4,8 +4,6 @@ from .models import (
     Information,
     Service,
     Booking,
-    Guest,
-    Price,
     FooterImage
 )
 from apps.blog.models import BaseModel
@@ -44,17 +42,3 @@ class BookingAdmin(admin.ModelAdmin):
     list_display = ('id', 'check_in', 'check_out', 'created_date')
     readonly_fields = ('created_date', )
     autocomplete_fields = ('room', )
-
-
-@admin.register(Guest)
-class GuestAdmin(admin.ModelAdmin):
-    list_display = ('id', 'adults', 'created_date')
-    autocomplete_fields = ('room',)
-    readonly_fields = ('created_date', )
-
-
-@admin.register(Price)
-class PriceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'money', 'created_date')
-    autocomplete_fields = ('room',)
-    readonly_fields = ('created_date', )

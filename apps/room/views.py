@@ -26,8 +26,10 @@ class RoomListView(ListView):
         return ctx
 
 
-class RoomDetailView(TemplateView):
+class RoomDetailView(DetailView):
     template_name = 'room/room_detail.html'
+    queryset = Room.objects.all()
+    slug_field = 'slug'
 
     def get_rooms(self):
         return Room.objects.all()

@@ -2,6 +2,7 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
+from utils.make_slug import make_slugify
 
 
 class BaseModel(models.Model):
@@ -23,6 +24,7 @@ class Blog(BaseModel):
     title = models.CharField(max_length=221)
     image = models.ImageField(upload_to='blog/')
     content = RichTextField()
+    slug = models.SlugField(max_length=221, null=True, blank=True)
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
@@ -47,6 +49,12 @@ class Comment(BaseModel):
     def children(self):
         model = self.__class__
         return model.objects.filter(top_level_comment_id=self.id)
+
+
+@receiver(pre_save, sender=Blog)
+def blog_pre_save(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        make_slugify(instance)
 
 
 @receiver(pre_save, sender=Comment)
