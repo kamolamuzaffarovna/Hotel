@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 
     'apps.room',
     'apps.blog',
-    'apps.main'
+    'apps.main',
+    'apps.account',
 ]
 
 MIDDLEWARE = [

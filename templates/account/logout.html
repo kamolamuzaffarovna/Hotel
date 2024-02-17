@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="breadcrumb-area bg-img bg-overlay jarallax"
+         style="background-image: url({% static 'img/bg-img/16.jpg' %});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content text-center">
+                        <h2 class="page-title">Logout Page</h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="{% url 'main:home' %}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Logout Page</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="roberto-contact-form-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 style="margin-bottom: 70px" class="text-danger">Are you sure to logout ?</h1>
+                    <div class="roberto-contact-form">
+                        <form action="#" method="post">
+                            {% csrf_token %}
+                            <div class="row justify-content-end">
+                                <div class="col-6 text-left wow fadeInUp" data-wow-delay="100ms">
+                                    <button type="submit" class="btn roberto-btn mt-15"><a href="{% url 'main:home' %}"> Yes, I am sure </a></button>
+                                </div>
+                                <div class="col-6 text-right wow fadeInUp" data-wow-delay="100ms">
+                                    <button type="submit" class="btn roberto-btn mt-15"> Logout </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

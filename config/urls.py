@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.main.urls', namespace='main')),
     path('blog/', include('apps.blog.urls', namespace='blog')),
-    path('room/', include('apps.room.urls', namespace='room'))
+    path('room/', include('apps.room.urls', namespace='room')),
+    path('account/', include('apps.account.urls', namespace='account'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -69,12 +69,11 @@
                                         <li><a href="{% url 'blog:list' %}">- Blog</a></li>
                                         <li><a href="{% url 'blog:detail' %}">- Single Blog</a></li>
                                         <li><a href="{% url 'main:contact' %}">- Contact</a></li>
-                                        <li><a href="{% url 'room:page-list' %}">- Dropdown</a>
+                                        <li><a href="#">- Dropdown</a>
                                             <ul class="dropdown">
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
+                                                <li><a href="{% url 'account:login' %}">- Login Page</a></li>
+                                                <li><a href="{% url 'account:logout' %}">- Logout Page</a></li>
+                                                <li><a href="{% url 'account:register' %}">- Register Page</a></li>
                                             </ul>
                                         </li>
                                     </ul>
