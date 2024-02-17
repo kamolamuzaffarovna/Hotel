@@ -38,7 +38,6 @@ class HomeView(TemplateView):
         return ctx
 
 
-
 class ContactView(ListView):
     queryset = HotelContact.objects.all()
     template_name = 'main/contact.html'
