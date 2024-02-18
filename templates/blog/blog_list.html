@@ -25,29 +25,25 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
-
+                {% for object in object_list %}
                     <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
 
                         <div class="post-thumbnail">
-                            {% for object in object_list %}
                                 <a href="#"><img src="{{ object.image.url }}" alt></a>
-                            {% endfor %}
                         </div>
 
                         <div class="post-content">
-
-                            <div class="post-meta">
-                                <a href="#" class="post-author">{% for object in object_list %}
-                                    {{ object.created_date|date:'F d, Y' }}{% endfor %}</a>
-                                <a href="#" class="post-tutorial">Event</a>
-                            </div>
-                            {% for object in object_list %}
+                                <div class="post-meta">
+                                    <a href="#" class="post-author">{{ object.created_date|date:'F d, Y' }}</a>
+                                    <a href="#" class="post-tutorial">Event</a>
+                                </div>
                                 <a href="#" class="post-title">{{ object.title }}</a>
                                 <p>{{ object.content|safe|slice:180 }}...</p>
-                                <a href="{% url 'blog:detail' %}" class="btn continue-btn">Read More</a>
-                            {% endfor %}
+                                <a href="{% url 'blog:detail' object.slug %}" class="btn continue-btn">Read More</a>
                         </div>
+
                     </div>
+                {% endfor %}
 
                     <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
                         <ul class="pagination">
@@ -75,15 +71,15 @@
                             </div>
                         </div>
 
-{#                        <div class="single-widget-area mb-100 clearfix">#}
-{#                            <h4 class="widget-title mb-30">Tags</h4>#}
-{##}
-{#                            <ul class="popular-tags">#}
-{#                                {% for tag in tags %}#}
-{#                                    <li><a href="#">{{ tag.title }},</a></li>#}
-{#                                {% endfor %}#}
-{#                            </ul>#}
-{#                        </div>#}
+                        {#                        <div class="single-widget-area mb-100 clearfix">#}
+                        {#                            <h4 class="widget-title mb-30">Tags</h4>#}
+                        {##}
+                        {#                            <ul class="popular-tags">#}
+                        {#                                {% for tag in tags %}#}
+                        {#                                    <li><a href="#">{{ tag.title }},</a></li>#}
+                        {#                                {% endfor %}#}
+                        {#                            </ul>#}
+                        {#                        </div>#}
 
                     </div>
                 </div>

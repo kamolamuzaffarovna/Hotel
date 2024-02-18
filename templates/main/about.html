@@ -74,15 +74,16 @@
                 </div>
             </div>
             <div class="row">
-
+                {% for object in rooms %}
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                            <img src="{% for object in rooms %}{{ object.header_image.url }}{% endfor %}" alt>
+                            <img src="{{ object.header_image.url }}" alt>
                             <div class="service-title d-flex align-items-center justify-content-center">
-                                <h5>{% for object in rooms %}{{ object.title }}{% endfor %}</h5>
+                                <h5>{{ object.title }}</h5>
                             </div>
                         </div>
                     </div>
+                {% endfor %}
 
             </div>
         </div>

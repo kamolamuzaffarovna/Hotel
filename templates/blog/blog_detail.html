@@ -12,8 +12,8 @@
                             <h2 class="post-title">{{ object.title }}</h2>
                             <div class="post-meta">
                                 <a href="#" class="post-date"><i class="fa fa-calendar"
-                                                                 aria-hidden="true"></i>{% for object in blog %}
-                                    {{ object.created_date|date:'d F, Y' }}{% endfor %}</a>
+                                                                 aria-hidden="true"></i>
+                                    {{ object.created_date|date:'d F, Y' }}</a>
                                 <a href="#" class="post-author"><i class="fa fa-user" aria-hidden="true"></i> by Joe
                                     Fylan</a>
                             </div>
@@ -28,33 +28,35 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
-                    {% for object in blog %}
-                        <div class="post-thumbnail mb-50">
-                            <img src="{{ object.image.url }}" alt>
-                        </div>
 
-                        <div class="blog-details-text">
-                            <p>{{ object.content|safe }}</p>
+                    <div class="post-thumbnail mb-50">
+                        <img src="{{ object.image.url }}" alt>
+                    </div>
 
-                            <blockquote class="roberto-blockquote d-flex">
-                                {% for object in content %}
-                                    {% if object.is_quota %}
-                                        <div class="icon">
-                                            <img src="{% static 'img/core-img/quote.png' %}" alt>
-                                        </div>
-                                        <div class="text">
-                                            <h5>{{ object.content|safe }}</h5>
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </blockquote>
+                    <div class="blog-details-text">
+                        <p>{{ object.content|safe }}</p>
 
-                        </div>
-                    {% endfor %}
+
+                        <blockquote class="roberto-blockquote d-flex">
+                            {% for object in contents %}
+                                {% if object.is_quota %}
+                                    <div class="icon">
+                                        <img src="{% static 'img/core-img/quote.png' %}" alt>
+                                    </div>
+                                    <div class="text">
+                                        <h5>{{ object.content|safe }}</h5>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </blockquote>
+
+
+                    </div>
+
                     <div class="post-author-area d-flex align-items-center justify-content-between mb-50">
                         <ul class="popular-tags">
                             {% for tag in tags %}
-                                    <li><a href="#">{{ tag.title }},</a></li>
+                                <li><a href="#">{{ tag.title }},</a></li>
                             {% endfor %}
                         </ul>
 

@@ -9,7 +9,7 @@ class HomeView(TemplateView):
     template_name = 'main/index.html'
 
     def get_blog(self):
-        return Blog.objects.all()
+        return Blog.objects.all()[:3]
 
     def get_icon(self):
         return Icon.objects.all()
@@ -47,7 +47,7 @@ class AboutView(TemplateView):
     template_name = 'main/about.html'
 
     def get_room(self):
-        return Room.objects.all()
+        return Room.objects.all()[:3]
 
     def get_manager(self):
         return Manager.objects.all()

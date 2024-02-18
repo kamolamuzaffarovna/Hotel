@@ -254,6 +254,7 @@
             <div class="row">
                 {% for object in blog %}
                     <div class="col-12 col-md-6 col-lg-4">
+
                         <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
                             <a href="#" class="post-thumbnail"><img src="{{ object.image.url }}" alt></a>
 
@@ -262,13 +263,15 @@
                                 <a href="#" class="post-catagory">Event</a>
                             </div>
 
-                            <a href="{% url 'blog:detail' %}" class="post-title">{{ object.title }}</a>
+                            <a href="{% url 'blog:detail' object.slug %}" class="post-title">{{ object.title }}</a>
                             <p>{{ object.content|safe|slice:100 }}...</p>
-                            <a href="{% url 'blog:detail' %}" class="btn continue-btn"><i class="fa fa-long-arrow-right"
-                                                                                          aria-hidden="true"></i></a>
+                            <a href="{% url 'blog:detail' object.slug %}" class="btn continue-btn"><i class="fa fa-long-arrow-right"
+                                                                    aria-hidden="true"></i></a>
                         </div>
+
                     </div>
                 {% endfor %}
+
             </div>
         </div>
     </section>
