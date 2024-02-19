@@ -5,8 +5,7 @@ from django.core.paginator import Paginator
 
 
 class RoomListView(ListView):
-    model = Room
-    template_name = 'room/room_list.html'
+    queryset = Room.objects.all()
     paginate_by = 1
 
     def get_queryset(self):
@@ -27,7 +26,6 @@ class RoomListView(ListView):
 
 
 class RoomDetailView(DetailView):
-    template_name = 'room/room_detail.html'
     queryset = Room.objects.all()
     slug_field = 'slug'
 

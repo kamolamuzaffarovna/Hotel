@@ -25,14 +25,15 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
-                {% for object in object_list %}
-                    <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+                    {% for object in object_list %}
+                        <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp"
+                             data-wow-delay="100ms">
 
-                        <div class="post-thumbnail">
+                            <div class="post-thumbnail">
                                 <a href="#"><img src="{{ object.image.url }}" alt></a>
-                        </div>
+                            </div>
 
-                        <div class="post-content">
+                            <div class="post-content">
                                 <div class="post-meta">
                                     <a href="#" class="post-author">{{ object.created_date|date:'F d, Y' }}</a>
                                     <a href="#" class="post-tutorial">Event</a>
@@ -40,18 +41,24 @@
                                 <a href="#" class="post-title">{{ object.title }}</a>
                                 <p>{{ object.content|safe|slice:180 }}...</p>
                                 <a href="{% url 'blog:detail' object.slug %}" class="btn continue-btn">Read More</a>
-                        </div>
+                            </div>
 
-                    </div>
-                {% endfor %}
+                        </div>
+                    {% endfor %}
 
                     <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next <i
+                            {% if page_obj.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous <i
+                                    class="fa fa-angle-left"></i></a>
+                            {% endif %}
+                            {% for page in page_obj.paginator.page_range %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next <i
                                     class="fa fa-angle-right"></i></a>
+                            {% endif %}
                             </li>
                         </ul>
                     </nav>
@@ -71,15 +78,36 @@
                             </div>
                         </div>
 
-                        {#                        <div class="single-widget-area mb-100 clearfix">#}
-                        {#                            <h4 class="widget-title mb-30">Tags</h4>#}
-                        {##}
-                        {#                            <ul class="popular-tags">#}
-                        {#                                {% for tag in tags %}#}
-                        {#                                    <li><a href="#">{{ tag.title }},</a></li>#}
-                        {#                                {% endfor %}#}
-                        {#                            </ul>#}
-                        {#                        </div>#}
+                        <div class="single-widget-area mb-100">
+                            <h4 class="widget-title mb-30">Recent News</h4>
+                            {% for object in blog %}
+                                <div class="single-recent-post d-flex">
+
+                                <div class="post-thumb">
+                                    <a href="{% url 'blog:detail' object.slug %}"><img src="{{ object.image.url }}" alt></a>
+                                </div>
+
+                                <div class="post-content">
+
+                                    <div class="post-meta">
+                                        <a href="#" class="post-author">{{ object.created_date|date:'d F, Y' }}</a>
+                                        <a href="#" class="post-tutorial">Event</a>
+                                    </div>
+                                    <a href="{% url 'blog:detail' object.slug %}" class="post-title">{{ object.title }}</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="single-widget-area mb-100 clearfix">
+                            <h4 class="widget-title mb-30">Tags</h4>
+
+                            <ul class="popular-tags">
+                                {% for tag in tags %}
+                                    <li><a href="#">{{ tag.title }},</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
 
                     </div>
                 </div>

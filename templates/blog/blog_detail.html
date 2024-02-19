@@ -55,8 +55,8 @@
 
                     <div class="post-author-area d-flex align-items-center justify-content-between mb-50">
                         <ul class="popular-tags">
-                            {% for tag in tags %}
-                                <li><a href="#">{{ tag.title }},</a></li>
+                            {% for object in tags %}
+                                <li><a href="#">{{ object.title }},</a></li>
                             {% endfor %}
                         </ul>
 
@@ -71,66 +71,56 @@
                     </div>
 
                     <div class="comment_area mb-50 clearfix">
-                        <h2>02 Comments</h2>
+                        <h2>
+                            {% if comments %}
+                                {{ comments.count }} Comments
+                            {% else %}
+                                No Comments
+                            {% endif %}
+                        </h2>
                         <ol>
+                            {% for object in comments %}
+                                <li class="single_comment_area">
 
-                            <li class="single_comment_area">
+                                    <div class="comment-content d-flex">
 
-                                <div class="comment-content d-flex">
-
-                                    <div class="comment-author">
-                                        <img src="{% static 'img/bg-img/40.jpg' %}" alt="author">
-                                    </div>
-
-                                    <div class="comment-meta">
-                                        <a href="#" class="post-date">27 Aug 2016</a>
-                                        <h5>Brandon Kelley</h5>
-                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                            adipisci velit, sed quia non numquam eius modi.</p>
-                                        <a href="#" class="like">Like</a>
-                                        <a href="#" class="reply">Reply</a>
-                                    </div>
-                                </div>
-                                <ol class="children">
-                                    <li class="single_comment_area">
-
-                                        <div class="comment-content d-flex">
-
-                                            <div class="comment-author">
-                                                <img src="{% static 'img/bg-img/41.jpg' %}" alt="author">
-                                            </div>
-
-                                            <div class="comment-meta">
-                                                <a href="#" class="post-date">27 Aug 2018</a>
-                                                <h5>John Doe</h5>
-                                                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-                                                    consectetu adipisci velit, sed quia non numquam eius modi</p>
-                                                <a href="#" class="like">Like</a>
-                                                <a href="#" class="reply">Reply</a>
-                                            </div>
+                                        <div class="comment-author">
+                                            <img src="
+                                                    {% if object.author.commentpicture %}{{ object.commentpicture.picture.url }}{% else %}{% static 'img/bg-img/40.jpg' %}{% endif %}"
+                                                 alt="author">
                                         </div>
-                                    </li>
-                                </ol>
-                            </li>
 
-                            <li class="single_comment_area">
-
-                                <div class="comment-content d-flex">
-
-                                    <div class="comment-author">
-                                        <img src="{% static 'img/bg-img/42.jpg' %}" alt="author">
+                                        <div class="comment-meta">
+                                            <a href="#" class="post-date">{{ object.created_date|date:'d M F' }}</a>
+                                            <h5>{{ object.author.username }}</h5>
+                                            <p>{{ object.message }}</p>
+                                            <a href="#" class="like">Like</a>
+                                            <a href="?pid={{ comments.id }}" class="reply">Reply</a>
+                                        </div>
                                     </div>
+                                    <ol class="children">
 
-                                    <div class="comment-meta">
-                                        <a href="#" class="post-date">27 Aug 2018</a>
-                                        <h5>Lander Tea</h5>
-                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetu
-                                            adipisci velit, sed quia non numquam eius modi</p>
-                                        <a href="#" class="like">Like</a>
-                                        <a href="#" class="reply">Reply</a>
-                                    </div>
-                                </div>
-                            </li>
+                                        <li class="single_comment_area">
+                                            {% for child in comments.children.all %}
+                                                <div class="comment-content d-flex">
+
+                                                    <div class="comment-author">
+                                                        <img src="{% if child.author.commentpicture %}{{ child.commentpicture.picture.url }}{% else %}{% static 'img/bg-img/41.jpg' %}{% endif %}" alt="author">
+                                                    </div>
+
+                                                    <div class="comment-meta">
+                                                        <a href="#" class="post-date">{{ child.created_date|date:'d M Y' }}</a>
+                                                        <h5>{{ child.author.username }}</h5>
+                                                        <p>{{ child.message }}</p>
+                                                        <a href="#" class="like">Like</a>
+                                                        <a href="?pid={{ comments.id }}" class="reply">Reply</a>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </li>
+                                    </ol>
+                                </li>
+                            {% endfor %}
                         </ol>
                     </div>
 
@@ -174,6 +164,29 @@
                                     <button type="submit" class="btn roberto-btn w-100">Subscribe</button>
                                 </form>
                             </div>
+                        </div>
+
+                        <div class="single-widget-area mb-100">
+                            <h4 class="widget-title mb-30">Recent News</h4>
+                            {% for object in blogs %}
+                                <div class="single-recent-post d-flex">
+
+                                    <div class="post-thumb">
+                                        <a href="{% url 'blog:detail' object.slug %}"><img src="{{ object.image.url }}"
+                                                                                           alt></a>
+                                    </div>
+
+                                    <div class="post-content">
+
+                                        <div class="post-meta">
+                                            <a href="#" class="post-author">{{ object.created_date|date:'d F, Y' }}</a>
+                                            <a href="#" class="post-tutorial">Event</a>
+                                        </div>
+                                        <a href="{% url 'blog:detail' object.slug %}"
+                                           class="post-title">{{ object.title }}</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
 
                         <div class="single-widget-area mb-100 clearfix">

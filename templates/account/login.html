@@ -29,12 +29,14 @@
                         <form action="#" method="post">
                             <div class="row justify-content-center">
                                 <div class="col-6 wow fadeInUp" data-wow-delay="100ms">
-                                    <input type="text" name="message-name" class="form-control mb-30"
-                                           placeholder="Your Name">
+{#                                    <input type="text" name="message-name" class="form-control mb-30"#}
+{#                                           placeholder="Your Name">#}
+                                    {{ form.username }}
                                 </div>
                                 <div class="col-6 wow fadeInUp" data-wow-delay="100ms">
-                                    <input type="password" name="message-password" class="form-control mb-30"
-                                           placeholder="Your Password">
+{#                                    <input type="password" name="message-password" class="form-control mb-30"#}
+{#                                           placeholder="Your Password">#}
+                                    {{ form.password }}
                                 </div>
                                 <div class="col-6 text-left wow fadeInUp" data-wow-delay="100ms">
                                     <button type="submit" class="btn roberto-btn mt-15"> If you have not an account <a href="{% url 'account:register' %}"> Register </a></button>

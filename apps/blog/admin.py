@@ -25,8 +25,8 @@ class BlogAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'parent', 'created_date')
+    list_display = ('id', 'author', 'parent', 'created_date')
     readonly_fields = ('modified_date', 'created_date')
     date_hierarchy = 'created_date'
-    search_fields = ('name',)
+    search_fields = ('author',)
     autocomplete_fields = ('blog',)

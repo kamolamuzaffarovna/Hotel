@@ -39,7 +39,7 @@ class Content(models.Model):
 
 class Comment(BaseModel):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, blank=True, related_name='comments')
-    name = models.CharField(max_length=221)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
     image = models.ImageField(upload_to='comment/')
     message = models.TextField()
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
