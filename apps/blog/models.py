@@ -24,7 +24,7 @@ class Blog(BaseModel):
     title = models.CharField(max_length=221)
     image = models.ImageField(upload_to='blog/')
     content = RichTextField()
-    slug = models.SlugField(max_length=221, null=True, blank=True)
+    slug = models.SlugField(unique=True, max_length=221, null=True, blank=True)
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):

@@ -86,6 +86,7 @@
 
                                         <div class="comment-author">
                                             <img src="
+
                                                     {% if object.author.commentpicture %}{{ object.commentpicture.picture.url }}{% else %}{% static 'img/bg-img/40.jpg' %}{% endif %}"
                                                  alt="author">
                                         </div>
@@ -95,25 +96,28 @@
                                             <h5>{{ object.author.username }}</h5>
                                             <p>{{ object.message }}</p>
                                             <a href="#" class="like">Like</a>
-                                            <a href="?pid={{ comments.id }}" class="reply">Reply</a>
+                                            <a href="?pid={{ object.id }}" class="reply">Reply</a>
                                         </div>
                                     </div>
                                     <ol class="children">
 
                                         <li class="single_comment_area">
-                                            {% for child in comments.children.all %}
+                                            {% for child in object.children.all %}
                                                 <div class="comment-content d-flex">
 
                                                     <div class="comment-author">
-                                                        <img src="{% if child.author.commentpicture %}{{ child.commentpicture.picture.url }}{% else %}{% static 'img/bg-img/41.jpg' %}{% endif %}" alt="author">
+                                                        <img src="
+                                                                {% if child.author.commentpicture %}{{ child.commentpicture.picture.url }}{% else %}{% static 'img/bg-img/41.jpg' %}{% endif %}"
+                                                             alt="author">
                                                     </div>
 
                                                     <div class="comment-meta">
-                                                        <a href="#" class="post-date">{{ child.created_date|date:'d M Y' }}</a>
+                                                        <a href="#"
+                                                           class="post-date">{{ child.created_date|date:'d M Y' }}</a>
                                                         <h5>{{ child.author.username }}</h5>
                                                         <p>{{ child.message }}</p>
                                                         <a href="#" class="like">Like</a>
-                                                        <a href="?pid={{ comments.id }}" class="reply">Reply</a>
+                                                        <a href="?pid={{ object.id }}#message" class="reply">Reply</a>
                                                     </div>
                                                 </div>
                                             {% endfor %}
@@ -124,25 +128,14 @@
                         </ol>
                     </div>
 
-                    <div class="roberto-contact-form mt-80 mb-100">
+                    <div class="roberto-contact-form mt-80 mb-100" id="comment">
                         <h2>Leave A Comment</h2>
 
-                        <form action="#" method="post">
+                        <form method="post">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col-12">
-                                    <input type="text" name="message-name" class="form-control mb-30"
-                                           placeholder="Your Name">
-                                </div>
-                                <div class="col-12">
-                                    <input type="email" name="message-email" class="form-control mb-30"
-                                           placeholder="Email">
-                                </div>
-                                <div class="col-12">
-                                    <input type="text" name="website" class="form-control mb-30" placeholder="Websites">
-                                </div>
-                                <div class="col-12">
-                                <textarea name="message" class="form-control mb-30"
-                                          placeholder="Start the discussion..."></textarea>
+                                    <textarea name="message" id="message" class="form-control mb-30" placeholder="Start the discussion..."></textarea>
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn roberto-btn btn-3 mt-15">Post Comment</button>

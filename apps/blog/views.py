@@ -32,8 +32,11 @@ class BlogDetailView(DetailView):
     def get_content(self):
         return Content.objects.all()
 
+    def get_blogs(self):
+        return Blog.objects.all()
+
     def get_comment(self):
-        return Comment.objects.filter(blog=self.get_object(), parent__isnull=True)
+        return Comment.objects.filter(blog=self.get_object(), parent__isnull=True).order_by('-id')
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -46,12 +49,13 @@ class BlogDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         message = request.POST.get('message')
-        pid = request.GET.get('pid')
+        pid = request.GET.get('pid', None)
         if message:
-            instance = self.get_blog()
-            user = request.user
-            Comment.objects.create(blog_id=instance.id, author_id=user.id, parent_id=pid, message=message)
-            return redirect('.')
+            instance = self.get_object()
+            if instance and instance.id is not None:
+                user = request.user
+                Comment.objects.create(blog_id=instance.id, author_id=user.id, parent_id=pid, message=message)
+                return redirect('.#message')
         messages.error(request, "Comment is empty")
         return redirect('.')
 
