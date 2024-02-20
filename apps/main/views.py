@@ -71,7 +71,7 @@ class RoomBronView(View):
 
     def get(self, request, *args, **kwargs):
         rid = self.kwargs.get('rid')
-        # path = request.GET.get('next')
+        path = request.GET.get('next')
 
         check_in = request.GET.get('check_in')
         check_out = request.GET.get('check_out')
@@ -99,7 +99,7 @@ class RoomBronView(View):
                     messages.success(request, "check_in")
                 else:
                     messages.error(request, "These rooms are already booked")
-        return redirect('room:page-list')
+        return redirect(path)
 
     def bron_form(self, request, *args, **kwargs):
         room_choices = ["01", "02", "03", "04", "05", "06"]
