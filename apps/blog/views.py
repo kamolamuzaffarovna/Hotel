@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, DetailView, View
-from .models import Blog, Tag, Content, Comment
+from .models import Blog, Tag, Content, Comment, BlogCommentLike
 from django.contrib import messages
 
 
@@ -60,7 +60,8 @@ class BlogDetailView(DetailView):
         return redirect('.')
 
 
-class BlogCommentLike(View):
+class CommentLike(View):
+
     def get(self, request, *args, **kwargs):
         bid = self.kwargs.get('bid')
         path = request.GET.get('next')
@@ -68,7 +69,7 @@ class BlogCommentLike(View):
             request.user.blogcommentlike_set.filter(blog_id=bid).delete()
             messages.success(request, "disliked")
         else:
-            Blog.objects.create(author_id=request.user.id, blog_id=bid)
+            BlogCommentLike.objects.get_or_create(author_id=request.user.id, blog_id=bid)
             messages.success(request, "liked")
-        return redirect('.')
+        return redirect(path)
 

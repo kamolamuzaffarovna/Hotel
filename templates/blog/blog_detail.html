@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load comment_like %}
 
 {% block content %}
     <div class="breadcrumb-area bg-img bg-overlay jarallax"
@@ -87,6 +88,7 @@
                                         <div class="comment-author">
                                             <img src="
 
+
                                                     {% if object.author.commentpicture %}{{ object.commentpicture.picture.url }}{% else %}{% static 'img/bg-img/40.jpg' %}{% endif %}"
                                                  alt="author">
                                         </div>
@@ -95,8 +97,15 @@
                                             <a href="#" class="post-date">{{ object.created_date|date:'d M F' }}</a>
                                             <h5>{{ object.author.username }}</h5>
                                             <p>{{ object.message }}</p>
-                                            <a href="#" class="like">Like</a>
-                                            <a href="?pid={{ object.id }}" class="reply">Reply</a>
+                                            <a href="{% url 'blog:likes' object.id %}?next={{ request.path }}"
+                                               class="like">
+                                                {% if object.comment_set.all|user_comment_likes:request.user.id %}
+                                                    Dislike
+                                                {% else %}
+                                                    Like
+                                                {% endif %}
+                                            </a>
+                                            <a href="{% if request.user.is_authenticated %}?pid={{ object.id }}{% else %}{% url 'account:login' %}?next=?pid{{ object.id }}{% endif %}" class="reply">Reply</a>
                                         </div>
                                     </div>
                                     <ol class="children">
@@ -107,6 +116,7 @@
 
                                                     <div class="comment-author">
                                                         <img src="
+
                                                                 {% if child.author.commentpicture %}{{ child.commentpicture.picture.url }}{% else %}{% static 'img/bg-img/41.jpg' %}{% endif %}"
                                                              alt="author">
                                                     </div>
@@ -135,7 +145,8 @@
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-12">
-                                    <textarea name="message" id="message" class="form-control mb-30" placeholder="Start the discussion..."></textarea>
+                                    <textarea name="message" id="message" class="form-control mb-30"
+                                              placeholder="Start the discussion..."></textarea>
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn roberto-btn btn-3 mt-15">Post Comment</button>
@@ -154,7 +165,7 @@
                                 <form action="#" method="post">
                                     <input type="email" name="nl-email" id="nlEmail" class="form-control"
                                            placeholder="Enter your email...">
-                                    <button type="submit" class="btn roberto-btn w-100">Subscribe</button>
+                                    <button type="submit" class="btn roberto-btn w-100"><a href="{% url 'account:login' %}"> Subscribe</a></button>
                                 </form>
                             </div>
                         </div>

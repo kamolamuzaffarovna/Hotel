@@ -21,7 +21,7 @@ class ContactForm(forms.ModelForm):
             'class': 'form-control mb-30',
             'placeholder': 'Your Email'
         })
-        self.fields['name'].widget.attrs.update({
+        self.fields['message'].widget.attrs.update({
             'name': 'message',
             'class': 'form-control mb-30',
             'placeholder': 'Your Message'
