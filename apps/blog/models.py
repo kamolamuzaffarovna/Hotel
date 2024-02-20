@@ -37,6 +37,11 @@ class Content(models.Model):
     is_quota = models.BooleanField(default=False)
 
 
+class BlogCommentLike(BaseModel):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, blank=True, related_name='likes')
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
+
+
 class Comment(BaseModel):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, blank=True, related_name='comments')
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)

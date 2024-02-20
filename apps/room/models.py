@@ -44,18 +44,27 @@ class Service(BaseModel):
 
 class Booking(BaseModel):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='booking')
-    author = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
     check_in = models.DateField()
     check_out = models.DateField()
-    adults = models.IntegerField()
-    children = models.IntegerField()
+    adults = models.PositiveIntegerField()
+    children = models.PositiveIntegerField()
 
     def __str__(self):
-        return self.check_in
+        return f'{self.check_in}'
 
-    @property
-    def amount(self):
-        pass
+    # class Meta:
+    #     unique_together = ('room', 'check_in', 'check_out')
+    #
+    # def save(self, *args, **kwargs):
+    #     if not self.pk and Booking.objects.filter(
+    #         room=self.room,
+    #         check_in__lt=self.check_out,
+    #         check_out__gt=self.check_in,
+    #     ).exists():
+    #
+    #         raise ValueError("These rooms are already booked")
+    #     super().save(*args, **kwargs)
 
 
 @receiver(pre_save, sender=Room)

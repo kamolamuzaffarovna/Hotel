@@ -4,7 +4,7 @@ from .models import (
     Information,
     Service,
     Booking,
-    FooterImage
+    FooterImage,
 )
 from apps.blog.models import BaseModel
 

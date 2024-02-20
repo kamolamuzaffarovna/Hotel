@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, View
 from .models import Blog, Tag, Content, Comment
 from django.contrib import messages
 
@@ -57,5 +57,18 @@ class BlogDetailView(DetailView):
                 Comment.objects.create(blog_id=instance.id, author_id=user.id, parent_id=pid, message=message)
                 return redirect('.#message')
         messages.error(request, "Comment is empty")
+        return redirect('.')
+
+
+class BlogCommentLike(View):
+    def get(self, request, *args, **kwargs):
+        bid = self.kwargs.get('bid')
+        path = request.GET.get('next')
+        if request.user.blogcommentlike_set.filter(blog_id=bid).exists():
+            request.user.blogcommentlike_set.filter(blog_id=bid).delete()
+            messages.success(request, "disliked")
+        else:
+            Blog.objects.create(author_id=request.user.id, blog_id=bid)
+            messages.success(request, "liked")
         return redirect('.')
 

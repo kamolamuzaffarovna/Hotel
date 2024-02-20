@@ -5,7 +5,7 @@ from .models import (
     Contact,
     HotelContact,
     Manager,
-    Slide
+    Slide,
 )
 
 

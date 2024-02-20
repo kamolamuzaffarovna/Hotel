@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tag, Blog, Comment, Content
+from .models import Tag, Blog, Comment, Content, BlogCommentLike
 
 
 @admin.register(Tag)
@@ -30,3 +30,6 @@ class CommentAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_date'
     search_fields = ('author',)
     autocomplete_fields = ('blog',)
+
+
+admin.site.register(BlogCommentLike)
