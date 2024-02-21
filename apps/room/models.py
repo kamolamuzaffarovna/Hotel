@@ -53,18 +53,18 @@ class Booking(BaseModel):
     def __str__(self):
         return f'{self.check_in}'
 
-    class Meta:
-        unique_together = ('room', 'check_in', 'check_out')
-
-    def save(self, *args, **kwargs):
-        if not self.pk and Booking.objects.filter(
-            room=self.room,
-            check_in__lt=self.check_out,
-            check_out__gt=self.check_in,
-        ).exists():
-
-            raise ValueError("These rooms are already booked")
-        super().save(*args, **kwargs)
+    # class Meta:
+    #     unique_together = ('room', 'check_in', 'check_out')
+    #
+    # def save(self, *args, **kwargs):
+    #     if not self.pk and Booking.objects.filter(
+    #         room=self.room,
+    #         check_in__lt=self.check_out,
+    #         check_out__gt=self.check_in,
+    #     ).exists():
+    #
+    #         raise ValueError("These rooms are already booked")
+    #     super().save(*args, **kwargs)
 
 
 @receiver(pre_save, sender=Room)
