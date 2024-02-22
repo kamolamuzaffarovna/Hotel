@@ -93,7 +93,6 @@
                     {#                    </div>#}
                 </div>
                 <div class="col-12 col-lg-4">
-
                     <div class="hotel-reservation--area mb-100">
                         <form action="#" method="post">
                             <div class="form-group mb-30">
@@ -117,23 +116,17 @@
                                     <div class="col-6">
                                         <select name="adults" id="guests" class="form-control">
                                             <option value="adults">Adults</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
+                                            {% for object in bookings %}
+                                                <option value="{{ object.adults }}">{{ object.adults }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-6">
                                         <select name="children" id="children" class="form-control">
                                             <option value="children">Children</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
+                                            {% for object in children %}
+                                            <option value="01">{{ object.children }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div>
