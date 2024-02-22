@@ -7,6 +7,7 @@ from .models import (
     Manager,
     Slide,
 )
+from apps.room.models import Booking
 
 
 @admin.register(DateField)
@@ -42,3 +43,6 @@ class ManagerAdmin(admin.ModelAdmin):
 class SlideAdmin(admin.ModelAdmin):
     list_display = ('id', 'header_title')
     search_fields = ('header_title', 'footer_title')
+
+
+# admin.site.register(Booking)

@@ -39,6 +39,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'check_in', 'check_out', 'created_date')
-    readonly_fields = ('created_date', )
+    list_display = ('id', 'check_in', 'check_out', 'adults', 'children')
+    readonly_fields = ('check_in', 'check_out')
     autocomplete_fields = ('room', )
+    list_filter = ('price', )
