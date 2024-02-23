@@ -98,12 +98,15 @@
                                         <div class="col-6">
                                             <select name="adults" id="guests" class="form-control">
                                                 <option value="adults">Adults</option>
-                                                <option value="{{ object.adults }}">{{ object.adults }}</option>
+{#                                                <option value="{{ object.adults }}">{{ object.adults }}</option>#}
+                                                {{ form.adults }}
                                             </select>
                                         </div>
                                         <div class="col-6">
                                             <select name="children" id="children" class="form-control">
-                                                <option value="{{ object.children }}">{{ object.children }}</option>
+                                                <option value="children">Children</option>
+{#                                                <option value="{{ object.children }}">{{ object.children }}</option>#}
+                                                {{ form.children }}
                                             </select>
                                         </div>
                                     </div>

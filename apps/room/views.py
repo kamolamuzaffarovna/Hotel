@@ -11,6 +11,8 @@ class RoomListView(ListView):
     queryset = Room.objects.all()
     paginate_by = 1
 
+    # template_name = 'room/room_detail.html'
+
     def get_queryset(self):
         return Room.objects.all()
 
@@ -30,6 +32,20 @@ class RoomListView(ListView):
         ctx['booking'] = self.get_booking()
 
         return ctx
+
+    # def get(self, request, *args, **kwargs):
+    #     form = RoomBronForm()
+    #     ctx = {'form': form}
+    #     return render(request, 'room/room_list.html', ctx)
+
+    def post(self, request, *args, **kwargs):
+        form = RoomBronForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            if request.FILES:
+                Room.objects.create(user_id=user.id, header_image=request.FILES.get('header-image'))
+                messages.success(request, 'Successfully room bron')
+            return redirect(reverse_lazy('room:page-detail'))
 
 
 class RoomDetailView(DetailView):
@@ -60,9 +76,3 @@ class RoomDetailView(DetailView):
         ctx['bookings'] = self.get_bookings()
 
         return ctx
-
-
-class RoomBronView(CreateView):
-    form_class = RoomBronForm
-    model = Room
-    success_url = reverse_lazy('room:page-list')
