@@ -44,6 +44,50 @@ class HomeView(TemplateView):
 
         return ctx
 
+    def get(self, request, *args, **kwargs):
+        rid = self.kwargs.get('rid')
+        # path = request.GET.get('next')
+
+        check_in = request.GET.get('check_in')
+        check_out = request.GET.get('check_out')
+        adults = request.GET.get('adults')
+        children = request.GET.get('children')
+        # if rid is not None and check_in is not None and check_out is not None:
+        if request.user.booking_set.filter(room_id=rid, check_in__lte=check_out,
+                                           check_out__gte=check_in).exists():
+            request.user.booking_set.filter(room_id=rid, check_in__lte=check_out,
+                                            check_out__gte=check_in).delete()
+            messages.success(request, "These rooms are already booked")
+
+        else:
+            Booking.objects.create(
+                author=request.user,
+                room_id=rid,
+                check_in=check_in,
+                check_out=check_out,
+                adults=adults,
+                children=children
+            )
+            messages.success(request, "check_in")
+
+        return redirect('.')
+    # else:
+
+
+#     messages.error(request, "Invalid parameters provided.")
+#     return redirect(reverse_lazy('main:home'))
+
+def post(self, request, *args, **kwargs):
+    form = RoomBronForm(data=request.POST)
+    if form.is_valid():
+        booking = form.save(commit=False)
+        booking.author = request.user
+        booking.save()
+        if request.FILES:
+            Room.objects.create(user=request.user, header_image=request.FILES.get('header-image'))
+            messages.success(request, "Successfully room bron")
+            return redirect(reverse_lazy('room:page-detail'))
+
 
 class ContactView(CreateView):
     form_class = ContactForm
@@ -66,89 +110,3 @@ class AboutView(TemplateView):
         ctx['managers'] = self.get_manager()
 
         return ctx
-
-
-class RoomBronView(View):
-    template_name = 'main/index.html'
-
-    @method_decorator(login_required, name='dispatch')
-    class RoomBookingView(View):
-        template_name = 'main/index.html'
-
-        def get(self, request, *args, **kwargs):
-            rid = self.kwargs.get('rid')
-            path = request.GET.get('next')
-
-            check_in = request.GET.get('check_in')
-            check_out = request.GET.get('check_out')
-            adults = request.GET.get('adults')
-            children = request.GET.get('children')
-
-            bron_booking = request.user.booking_set.filter(room_id=rid, booking_check_in__lt=check_out,
-                                                           booking_check_out__gt=check_in).first()
-
-            with transaction.atomic():
-                if bron_booking:
-                    bron_booking.delete()
-                    messages.error(request, "check_out")
-                else:
-                    if not Booking.objects.filter(room_id=rid, booking_check_in__lt=check_out,
-                                                  booking_check_out__gt=check_in).exists():
-                        Booking.objects.create(
-                            author=request.user,
-                            room_id=rid,
-                            booking_check_in=check_in,
-                            booking_check_out=check_out,
-                            booking_adults=adults,
-                            booking_children=children
-                        )
-                        messages.success(request, "check_in")
-                    else:
-                        messages.error(request, "These rooms are already booked")
-            return redirect(path)
-
-        def post(self, request, *args, **kwargs):
-
-            pass
-
-        def bron_form(self, request, *args, **kwargs):
-            room_choices = ["01", "02", "03", "04", "05", "06"]
-            adult_choices = ["01", "02", "03", "04", "05", "06"]
-            children_choices = ["01", "02", "03", "04", "05", "06"]
-
-            if request.method == 'POST':
-                form = RoomBronForm(request.POST)
-                if form.is_valid():
-                    check_in = form.cleaned_data['check_in']
-                    check_out = form.cleaned_data['check_out']
-                    room = form.cleaned_data['room']
-                    adults = form.cleaned_data['adults']
-                    children = form.cleaned_data['children']
-
-                    with transaction.atomic():
-                        if not Booking.objects.filter(room_id=room, booking_check_in__lt=check_out,
-                                                      booking_check_out__gt=check_in).exists():
-                            Booking.objects.create(
-                                author=request.user,
-                                room_id=room,
-                                booking_check_in=check_in,
-                                booking_check_out=check_out,
-                                booking_adults=adults,
-                                booking_children=children
-                            )
-                            messages.success(request, "check_in")
-                        else:
-                            messages.error(request, "These rooms are already booked")
-                            return redirect('main:index')
-
-            else:
-                form = RoomBronForm()
-
-            ctx = {
-                'form': form,
-                'room_choices': room_choices,
-                'adult_choices': adult_choices,
-                'children_choices': children_choices,
-            }
-
-            return render(request, self.template_name, ctx)
