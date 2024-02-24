@@ -89,6 +89,8 @@
                                             <img src="
 
 
+
+
                                                     {% if object.author.commentpicture %}{{ object.commentpicture.picture.url }}{% else %}{% static 'img/bg-img/40.jpg' %}{% endif %}"
                                                  alt="author">
                                         </div>
@@ -97,15 +99,17 @@
                                             <a href="#" class="post-date">{{ object.created_date|date:'d M F' }}</a>
                                             <h5>{{ object.author.username }}</h5>
                                             <p>{{ object.message }}</p>
-                                            <a href="{% url 'blog:likes' object.id %}?next={{ request.path }}"
+                                            <a href="{% url 'blog:comment-like' object.id %}?next={{ request.path }}"
                                                class="like">
-                                                {% if object.comment_set.all|user_comment_likes:request.user.id %}
+                                                {% if object.id|user_comment_likes:request.user %}
                                                     Dislike
                                                 {% else %}
                                                     Like
                                                 {% endif %}
                                             </a>
-                                            <a href="{% if request.user.is_authenticated %}?pid={{ object.id }}{% else %}{% url 'account:login' %}?next=?pid{{ object.id }}{% endif %}" class="reply">Reply</a>
+                                            <a href="{% if request.user.is_authenticated %}?pid=
+                                                {{ object.id }}{% else %}{% url 'account:login' %}?next=?pid{{ object.id }}{% endif %}"
+                                               class="reply">Reply</a>
                                         </div>
                                     </div>
                                     <ol class="children">
@@ -117,6 +121,8 @@
                                                     <div class="comment-author">
                                                         <img src="
 
+
+
                                                                 {% if child.author.commentpicture %}{{ child.commentpicture.picture.url }}{% else %}{% static 'img/bg-img/41.jpg' %}{% endif %}"
                                                              alt="author">
                                                     </div>
@@ -126,8 +132,18 @@
                                                            class="post-date">{{ child.created_date|date:'d M Y' }}</a>
                                                         <h5>{{ child.author.username }}</h5>
                                                         <p>{{ child.message }}</p>
-                                                        <a href="#" class="like">Like</a>
-                                                        <a href="?pid={{ object.id }}#message" class="reply">Reply</a>
+                                                        <a href="{% url 'blog:comment-like' child.id %}?next={{ request.path }}"
+                                                           class="like">
+                                                            {% if object.id|user_comment_likes:request.user %}
+                                                                Dislike
+                                                            {% else %}
+                                                                Like
+                                                            {% endif %}
+                                                        </a>
+                                                        <a href="{% if request.user.is_authenticated %}?pid=
+
+                                                           {{ child.id }}{% else %}{% url 'account:login' %}?next=?pid{{ child.id }}{% endif %}"
+                                                           class="reply">Reply</a>
                                                     </div>
                                                 </div>
                                             {% endfor %}
@@ -165,7 +181,8 @@
                                 <form action="#" method="post">
                                     <input type="email" name="nl-email" id="nlEmail" class="form-control"
                                            placeholder="Enter your email...">
-                                    <button type="submit" class="btn roberto-btn w-100"><a href="{% url 'account:login' %}"> Subscribe</a></button>
+                                    <button type="submit" class="btn roberto-btn w-100"><a
+                                            href="{% url 'account:login' %}"> Subscribe</a></button>
                                 </form>
                             </div>
                         </div>

@@ -44,49 +44,48 @@ class HomeView(TemplateView):
 
         return ctx
 
-    def get(self, request, *args, **kwargs):
-        rid = self.kwargs.get('rid')
-        # path = request.GET.get('next')
-
-        check_in = request.GET.get('check_in')
-        check_out = request.GET.get('check_out')
-        adults = request.GET.get('adults')
-        children = request.GET.get('children')
-        # if rid is not None and check_in is not None and check_out is not None:
-        if request.user.booking_set.filter(room_id=rid, check_in__lte=check_out,
-                                           check_out__gte=check_in).exists():
-            request.user.booking_set.filter(room_id=rid, check_in__lte=check_out,
-                                            check_out__gte=check_in).delete()
-            messages.success(request, "These rooms are already booked")
-
-        else:
-            Booking.objects.create(
-                author=request.user,
-                room_id=rid,
-                check_in=check_in,
-                check_out=check_out,
-                adults=adults,
-                children=children
-            )
-            messages.success(request, "check_in")
-
-        return redirect('.')
-    # else:
-
-
-#     messages.error(request, "Invalid parameters provided.")
-#     return redirect(reverse_lazy('main:home'))
-
-def post(self, request, *args, **kwargs):
-    form = RoomBronForm(data=request.POST)
-    if form.is_valid():
-        booking = form.save(commit=False)
-        booking.author = request.user
-        booking.save()
-        if request.FILES:
-            Room.objects.create(user=request.user, header_image=request.FILES.get('header-image'))
-            messages.success(request, "Successfully room bron")
-            return redirect(reverse_lazy('room:page-detail'))
+    # def get(self, request, *args, **kwargs):
+    #     rid = self.kwargs.get('rid')
+    #
+    #     check_in = request.GET.get('check_in')
+    #     check_out = request.GET.get('check_out')
+    #     adults = request.GET.get('adults')
+    #     children = request.GET.get('children')
+    #     if rid is not None and check_in is not None and check_out is not None:
+    #         if request.user.booking_set.filter(room_id=rid, check_in__lte=check_out,
+    #                                            check_out__gte=check_in).exists():
+    #             request.user.booking_set.filter(room_id=rid, check_in__lte=check_out,
+    #                                             check_out__gte=check_in).delete()
+    #             messages.success(request, "These rooms are already booked")
+    #
+    #         else:
+    #             Booking.objects.create(
+    #                 author=request.user,
+    #                 room_id=rid,
+    #                 check_in=check_in,
+    #                 check_out=check_out,
+    #                 adults=adults,
+    #                 children=children
+    #             )
+    #             messages.success(request, "check_in")
+    #
+    #         return redirect('.')
+    #
+    #     else:
+    #
+    #         messages.error(request, "Invalid parameters provided.")
+    #         return redirect(reverse_lazy('main:home'))
+    #
+    # def post(self, request, *args, **kwargs):
+    #     form = RoomBronForm(data=request.POST)
+    #     if form.is_valid():
+    #         booking = form.save(commit=False)
+    #         booking.author = request.user
+    #         booking.save()
+    #         if request.FILES:
+    #             Room.objects.create(user=request.user, header_image=request.FILES.get('header-image'))
+    #             messages.success(request, "Successfully room bron")
+    #         return redirect(reverse_lazy('room:page-detail'))
 
 
 class ContactView(CreateView):

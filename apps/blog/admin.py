@@ -32,4 +32,11 @@ class CommentAdmin(admin.ModelAdmin):
     autocomplete_fields = ('blog',)
 
 
-admin.site.register(BlogCommentLike)
+@admin.register(BlogCommentLike)
+class BlogCommentLikeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'comment', 'author', )
+    autocomplete_fields = ('comment', 'author', )
+    search_fields = ('comment', )
+
+
+# admin.site.register(BlogParentLike)

@@ -49,7 +49,8 @@ class BlogDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         message = request.POST.get('message')
-        pid = request.GET.get('pid', None)
+        pid = request.POST.get('pid', None)
+        # bid = request.GET.get('bid', None)
         if message:
             instance = self.get_object()
             if instance and instance.id is not None:
@@ -63,13 +64,44 @@ class BlogDetailView(DetailView):
 class CommentLike(View):
 
     def get(self, request, *args, **kwargs):
-        bid = self.kwargs.get('bid')
+        comment_id = self.kwargs.get('comment_id')
         path = request.GET.get('next')
-        if request.user.blogcommentlike_set.filter(blog_id=bid).exists():
-            request.user.blogcommentlike_set.filter(blog_id=bid).delete()
-            messages.success(request, "disliked")
-        else:
-            BlogCommentLike.objects.get_or_create(author_id=request.user.id, blog_id=bid)
-            messages.success(request, "liked")
+
+        try:
+            existing_like = request.user.comment_like.get(comment_id=comment_id)
+
+            existing_like.delete()
+            messages.success(request, "Disliked")
+
+        except BlogCommentLike.DoesNotExist:
+            BlogCommentLike.objects.create(author=request.user, comment_id=comment_id)
+            messages.success(request, "Liked")
+
         return redirect(path)
+
+    # def get(self, request, *args, **kwargs):
+    #     pid = self.kwargs.get('pid')
+    #     path = request.GET.get('next')
+    #     if request.user.blogcommentlike_set.filter(comment_id=pid).exists():
+    #         request.user.blogcommentlike_set.filter(comment_id=pid).delete()
+    #         messages.success(request, "disliked")
+    #     else:
+    #         BlogCommentLike.objects.create(author_id=request.user.id, comment_id=pid)
+    #         messages.success(request, "liked")
+    #     return redirect(path)
+
+
+# class ParentLike(View):
+#
+#     def get(self, request, *args, **kwargs):
+#         pid = self.kwargs.get('pid')
+#         path = request.GET.get('end')
+#         if request.user.blogparentlike_set.filter(blog_id=pid).exists():
+#             request.user.blogparentlike_set.filter(blog_id=pid).delete()
+#             messages.success(request, "disliked")
+#         else:
+#             BlogParentLike.objects.get_or_create(author_id=request.user.id, blog_id=pid)
+#             messages.success(request, "liked")
+#         return redirect(path)
+
 

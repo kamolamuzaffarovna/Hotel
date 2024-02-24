@@ -37,9 +37,9 @@ class Content(models.Model):
     is_quota = models.BooleanField(default=False)
 
 
-class BlogCommentLike(BaseModel):
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, blank=True, related_name='likes')
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
+# class BlogParentLike(models.Model):
+#     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=True, blank=True, related_name='like')
+#     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
 
 
 class Comment(BaseModel):
@@ -48,7 +48,14 @@ class Comment(BaseModel):
     image = models.ImageField(upload_to='comment/')
     message = models.TextField()
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
+    # people = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='peoples')
     top_level_comment_id = models.IntegerField(null=True, blank=True)
+    likes = models.ManyToManyField('auth.User', related_name='comment_likes', blank=True)
+
+
+class BlogCommentLike(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='comment_like')
 
     @property
     def children(self):
