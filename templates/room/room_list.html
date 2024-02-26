@@ -25,7 +25,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-8">
-                    {% for object in list %}
+                    {% for object in rooms %}
                         <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp"
                              data-wow-delay="100ms">
 
@@ -53,25 +53,21 @@
                     <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="1000ms">
                         <ul class="pagination">
                             {% if page_obj.has_previous %}
-                                <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous <i
-                                        class="fa fa-angle-left"></i></a>
+                                <span class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
                             {% endif %}
                             {% for page in page_obj.paginator.page_range %}
-                                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                                <span class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></span>
                             {% endfor %}
                             {% if page_obj.has_next %}
-                                <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next <i
-                                        class="fa fa-angle-right"></i></a>
+                                <span class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></span>
                             {% endif %}
-                            </li>
                         </ul>
                     </nav>
 
                 </div>
                 <div class="col-12 col-lg-4">
-                    {% for object in booking %}
                         <div class="hotel-reservation--area mb-100">
                             <form method="post">
                                 {% csrf_token %}
@@ -80,14 +76,12 @@
                                     <div class="input-daterange" id="datepicker">
                                         <div class="row no-gutters">
                                             <div class="col-6">
-{#                                                <input type="text" class="input-small form-control" id="checkInDate"#}
-{#                                                       name="checkInDate" placeholder="Check In">#}
-                                                {{ form.check_in }}
+                                                <input type="text" class="input-small form-control" id="checkInDate"
+                                                       name="checkInDate" placeholder="Check In">
                                             </div>
                                             <div class="col-6">
-{#                                                <input type="text" class="input-small form-control" name="checkOutDate"#}
-{#                                                       placeholder="Check Out">#}
-                                                {{ form.check_out }}
+                                                <input type="text" class="input-small form-control" name="checkOutDate"
+                                                       placeholder="Check Out">
                                             </div>
                                         </div>
                                     </div>
@@ -98,39 +92,46 @@
                                         <div class="col-6">
                                             <select name="adults" id="guests" class="form-control">
                                                 <option value="adults">Adults</option>
-                                                <option value="{{ object.adults }}">{{ object.adults }}</option>
-{#                                                {{ form.adults }}#}
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
                                             </select>
                                         </div>
                                         <div class="col-6">
                                             <select name="children" id="children" class="form-control">
-{#                                                <option value="children">Children</option>#}
-{#                                                <option value="{{ object.children }}">{{ object.children }}</option>#}
-                                                {{ form.children }}
+                                                <option value="children">Children</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group mb-50">
-                                    <div class="slider-range">
-                                        <div class="range-price">Max Price: $ {{ object.price }}</div>
-                                        <div data-min="0" data-max="3000" data-unit="$"
-                                             class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
-                                             data-value-min="0" data-value-max="3000" data-label-result="Max Price: ">
-                                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all"
-                                                  tabindex="0"></span>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all"
-                                                  tabindex="0"></span>
-                                        </div>
-                                    </div>
-                                </div>
+{#                                <div class="form-group mb-50">#}
+{#                                    <div class="slider-range">#}
+{#                                        <div class="range-price">Max Price: $ {{ object.price }}</div>#}
+{#                                        <div data-min="0" data-max="3000" data-unit="$"#}
+{#                                             class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"#}
+{#                                             data-value-min="0" data-value-max="3000" data-label-result="Max Price: ">#}
+{#                                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>#}
+{#                                            <span class="ui-slider-handle ui-state-default ui-corner-all"#}
+{#                                                  tabindex="0"></span>#}
+{#                                            <span class="ui-slider-handle ui-state-default ui-corner-all"#}
+{#                                                  tabindex="0"></span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
                                 <div class="form-group">
                                     <button type="submit" class="btn roberto-btn w-100">Check Available</button>
                                 </div>
                             </form>
                         </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>

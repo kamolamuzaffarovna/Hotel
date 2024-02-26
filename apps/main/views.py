@@ -46,7 +46,6 @@ class HomeView(TemplateView):
 
     # def get(self, request, *args, **kwargs):
     #     rid = self.kwargs.get('rid')
-    #
     #     check_in = request.GET.get('check_in')
     #     check_out = request.GET.get('check_out')
     #     adults = request.GET.get('adults')
