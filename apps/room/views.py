@@ -38,8 +38,31 @@ class RoomListView(View):
             'data': data,
             'page_obj': page_obj
         }
+        return render(request, self.template_name, ctx)
+
+    def post(self, request, *args, **kwargs):
+        form = RoomBronForm(data=request.POST)
+        check_in = request.POST.get('check_in')
+        check_out = request.POST.get('check_out')
+        adults = request.POST.get('adults', 0)
+        children = request.POST.get('children', 0)
+
+        if form.is_valid():
+            form.save()
+        else:
+            Booking.objects.create(check_in=check_in, check_out=check_out, adults=adults, children=children)
+            messages.success(request, 'Check-in successful')
+
+        ctx = {
+            'check_in': check_in,
+            'check_out': check_out,
+            'adults': adults,
+            'children': children
+        }
 
         return render(request, self.template_name, ctx)
+
+
 
 
 # def get(self, request, *args, **kwargs):
