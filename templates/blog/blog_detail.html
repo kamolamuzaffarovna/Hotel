@@ -86,12 +86,7 @@
                                     <div class="comment-content d-flex">
 
                                         <div class="comment-author">
-                                            <img src="
-
-
-
-
-                                                    {% if object.author.contactpicture %}{{ object.contactpicture.picture.url }}{% else %}{% static 'img/bg-img/40.jpg' %}{% endif %}"
+                                            <img src="{% if object.author.contactpicture %}{{ object.contactpicture.picture.url }}{% else %}{% static 'img/bg-img/40.jpg' %}{% endif %}"
                                                  alt="author">
                                         </div>
 
@@ -107,8 +102,7 @@
                                                     Like
                                                 {% endif %}
                                             </a>
-                                            <a href="{% if request.user.is_authenticated %}?pid=
-                                                {{ object.id }}{% else %}{% url 'account:login' %}?next=?pid{{ object.id }}{% endif %}"
+                                            <a href="{% if request.user.is_authenticated %}?pid={{ object.id }}{% else %}{% url 'account:login' %}?next=?pid{{ object.id }}{% endif %}"
                                                class="reply">Reply</a>
                                         </div>
                                     </div>
@@ -119,11 +113,7 @@
                                                 <div class="comment-content d-flex">
 
                                                     <div class="comment-author">
-                                                        <img src="
-
-
-
-                                                                {% if child.author.contactpicture %}{{ child.contactpicture.picture.url }}{% else %}{% static 'img/bg-img/41.jpg' %}{% endif %}"
+                                                        <img src="{% if child.author.contactpicture %}{{ child.contactpicture.picture.url }}{% else %}{% static 'img/bg-img/41.jpg' %}{% endif %}"
                                                              alt="author">
                                                     </div>
 
@@ -134,7 +124,7 @@
                                                         <p>{{ child.message }}</p>
                                                         <a href="{% url 'blog:comment-like' child.id %}?next={{ request.path }}"
                                                            class="like">
-                                                            {% if object.id|user_comment_likes:request.user %}
+                                                            {% if child.id|user_comment_likes:request.user %}
                                                                 Dislike
                                                             {% else %}
                                                                 Like

@@ -69,18 +69,18 @@
                 </div>
                 <div class="col-12 col-lg-4">
                         <div class="hotel-reservation--area mb-100">
-                            <form method="post">
+                            <form method="get" action="{% url 'room:page-list' %}">
                                 {% csrf_token %}
                                 <div class="form-group mb-30">
                                     <label for="checkInDate">Date</label>
                                     <div class="input-daterange" id="datepicker">
                                         <div class="row no-gutters">
                                             <div class="col-6">
-                                                <input type="text" class="input-small form-control" id="checkInDate"
+                                                <input type="text" class="input-small form-control" id="check_in"
                                                        name="checkInDate" placeholder="Check In">
                                             </div>
                                             <div class="col-6">
-                                                <input type="text" class="input-small form-control" name="checkOutDate"
+                                                <input type="text" class="input-small form-control" id="check_out" name="checkOutDate"
                                                        placeholder="Check Out">
                                             </div>
                                         </div>

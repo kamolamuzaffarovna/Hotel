@@ -47,19 +47,6 @@ class BlogDetailView(DetailView):
 
         return ctx
 
-    # def post(self, request, *args, **kwargs):
-    #     message = request.POST.get('message')
-    #     pid = request.POST.get('pid', None)
-    #     # bid = request.GET.get('bid', None)
-    #     if message:
-    #         instance = self.get_object()
-    #         if instance and instance.id is not None:
-    #             user = request.user
-    #             Comment.objects.create(blog_id=instance.id, author_id=user.id, parent_id=pid, message=message)
-    #             return redirect('.#message')
-    #     messages.error(request, "Comment is empty")
-    #     return redirect('.')
-
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('account:login')
@@ -81,7 +68,7 @@ class CommentLike(View):
         path = request.GET.get('next')
 
         try:
-            existing_like = request.user.comment_like.get(comment_id=comment_id)
+            existing_like = request.user.comment_like.get(comment_id=comment_id,author=request.user)
 
             existing_like.delete()
             messages.success(request, "Disliked")

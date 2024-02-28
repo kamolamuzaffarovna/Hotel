@@ -12,8 +12,10 @@ class Room(BaseModel):
     title = models.CharField(max_length=221)
     money = models.CharField(max_length=221)
     slug = models.SlugField(max_length=221, null=True, blank=True)
-    header_image = models.ImageField(upload_to='room/')
+    header_image = models.ImageField(upload_to='room/', null=True, blank=True)
     content = RichTextField()
+    adults = models.IntegerField(null=True, blank=True)
+    children = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.title

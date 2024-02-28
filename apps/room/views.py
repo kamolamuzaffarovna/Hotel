@@ -1,8 +1,8 @@
+from datetime import datetime
 from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, DetailView, ListView, View, CreateView
+from django.views.generic import View
 from .models import Room, FooterImage, Information, Service, Booking
 from django.core.paginator import Paginator
 from apps.main.forms import RoomBronForm
@@ -12,23 +12,19 @@ class RoomListView(View):
     template_name = 'room/room_list.html'
 
     def get(self, request, *args, **kwargs):
-        rooms = Room.objects.order_by('-id')
+        rooms = Room.objects.all()
         data = Information.objects.all()
-        booking = Booking.objects.all()
         check_in = request.GET.get('check_in')
         check_out = request.GET.get('check_out')
         adults = request.GET.get('adults')
         children = request.GET.get('children')
         if check_in and check_out:
-            rooms = rooms.filter(~Q(booking__check_in__lte=check_out) | ~Q(booking__check_out__gte=check_in))
+            rooms = rooms.filter(
+                ~Q(rooms_booking__check_in__lte=check_out) | ~Q(rooms_booking__check_out__gte=check_in))
         if adults or children:
-            if type(adults) == str:
-                adults = 0
-            if type(children) == str:
-                children = 0
             adults = int(adults)
             children = int(children)
-            rooms = rooms.filter(Q(children__gte=children) or Q(adults__gte=adults))
+            rooms = rooms.filter(Q(children=children) or Q(adults=adults))
         paginator = Paginator(rooms, 1)
         page = request.GET.get('page')
         page_obj = paginator.get_page(page)
@@ -37,28 +33,6 @@ class RoomListView(View):
             'rooms': rooms,
             'data': data,
             'page_obj': page_obj
-        }
-        return render(request, self.template_name, ctx)
-
-    def post(self, request, *args, **kwargs):
-        form = RoomBronForm(data=request.POST)
-        check_in = request.POST.get('check_in')
-        check_out = request.POST.get('check_out')
-        adults = request.POST.get('adults', 0)
-        children = request.POST.get('children', 0)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Booking successful')
-        else:
-            messages.error(request, 'Booking failed. Please check the form.')
-
-        ctx = {
-            'check_in': check_in,
-            'check_out': check_out,
-            'adults': adults,
-            'children': children,
-            'form': form
         }
 
         return render(request, self.template_name, ctx)
@@ -84,45 +58,34 @@ class RoomDetailView(View):
         return render(request, self.template_name, ctx)
 
     def post(self, request, *args, **kwargs):
-        form = RoomBronForm(request.POST)
         objects = get_object_or_404(Room, slug=kwargs['slug'])
-        if form.is_valid():
-            check_in = form.cleaned_data['check_in']
-            check_out = form.cleaned_data['check_out']
-            adults = form.cleaned_data['adults']
-            children = form.cleaned_data['children']
-
-            Booking.objects.create(
-                check_in=check_in,
-                adults=adults,
-                children=children,
-                check_out=check_out,
-            )
-            messages.success(request, 'Successfully room bron')
-        else:
-            check_in = request.POST.get('check_in')
-            check_out = request.POST.get('check_out')
-            adults = request.POST.get('adults')
-            children = request.POST.get('children')
-
-        if not adults or not adults.isdigit():
-            adults = 0
-        if not children or not children.isdigit():
-            children = 0
-
-        adults = int(adults)
-        children = int(children)
-
+        form = RoomBronForm()
         ctx = {
-            'check_in': check_in,
-            'check_out': check_out,
-            'adults': adults,
-            'children': children,
-            'form': form,
-            'image': FooterImage.objects.all(),
-            'data': Information.objects.all(),
-            'services': Service.objects.all(),
-            'bookings': Booking.objects.all(),
-            'objects': objects
+            'objects': objects,
+            'form': form
         }
+        check_in = request.POST.get('check_in')
+        if check_in:
+            check_in = '20' + '-'.join(check_in.split('/')[::-1])
+        check_out = request.POST.get('check_out')
+        if check_out:
+            check_out = '20' + '-'.join(check_out.split('/')[::-1])
+        date = {
+            'check_in': check_in,
+            'check_out': check_out
+        }
+        # farq = abs((datetime.strptime(check_out, '%Y-%m-%d') - datetime.strptime(check_in, '%Y-%m-%d')).days)
+        # ctx['farq'] = farq
+        form = RoomBronForm(date)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.objects = objects
+            obj.author_id = request.user.id
+            form.save()
+            # messages.success(request,
+            #                  f'You booked the room for {farq} days and the total price $={farq * objects.price}')
+            return redirect('.')
+        else:
+            messages.success(request, 'the room is booking!!!')
+
         return render(request, self.template_name, ctx)

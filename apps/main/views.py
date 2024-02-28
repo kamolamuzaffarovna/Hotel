@@ -21,32 +21,26 @@ class HomeView(View):
         icon = Icon.objects.all()
         manager = Manager.objects.all()
         slide = Slide.objects.all()
-        room = Room.objects.all()
+        rooms = Room.objects.all()
         data = Information.objects.all()
-        # rooms = Room.objects.all()[:3]
         check_in = request.GET.get('check_in')
         check_out = request.GET.get('check_out')
         adults = request.GET.get('adults')
         children = request.GET.get('children')
         if check_in and check_out:
-            room = room.filter(~Q(booking__check_in__lte=check_out) | ~Q(booking__check_out__gte=check_in))
+            rooms = rooms.filter(~Q(booking__check_in__lte=check_out) | ~Q(booking__check_out__gte=check_in))
         if adults or children:
-            if type(adults) == str:
-                adults = 0
-            if type(children) == str:
-                children = 0
             adults = int(adults)
             children = int(children)
-            rooms = room.filter(Q(children__gte=children) or Q(adults__gte=adults))
+            rooms = rooms.filter(Q(children=children) or Q(adults=adults))
 
         ctx = {
             'blog': blog,
             'icon': icon,
             'manager': manager,
             'slide': slide,
-            'room': room,
+            'rooms': rooms,
             'data': data,
-            # 'rooms': rooms,
         }
 
         return render(request, self.template_name, ctx)
