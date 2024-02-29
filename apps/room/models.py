@@ -16,6 +16,7 @@ class Room(BaseModel):
     content = RichTextField()
     adults = models.IntegerField(null=True, blank=True)
     children = models.IntegerField(null=True, blank=True)
+    price = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -54,7 +55,7 @@ class Booking(models.Model):
     price = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.check_in} - {self.check_out} | Adults: {self.adults}, Children: {self.children}"
+        return f"{self.check_in} - {self.check_out} | adults: {self.adults}, children: {self.children}"
 
 
 @receiver(pre_save, sender=Room)

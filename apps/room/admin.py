@@ -39,18 +39,8 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'check_in', 'check_out', 'display_adults', 'display_children')
+    list_display = ('id', 'check_in', 'check_out', 'adults', 'children')
     readonly_fields = ('check_in', 'check_out')
     autocomplete_fields = ('room', )
     list_filter = ('price', )
     list_display_links = ('check_in', 'check_out')
-
-    def display_adults(self, obj):
-        return f"Adults: {obj.adults}"
-
-    display_adults.short_description = 'Adults'
-
-    def display_children(self, obj):
-        return f"Children: {obj.children}"
-
-    display_children.short_description = 'Children'
